@@ -1,0 +1,128 @@
+# =========================================
+# Django + Python
+# =========================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+*.pot
+*.mo
+*.py,cover
+*.cover
+*.pid
+*.seed
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Bytecode cache
+__pycache__/
+*.py[cod]
+
+# =========================================
+# Django Specific
+# =========================================
+db.sqlite3
+/media/
+staticfiles/
+logs/
+*.db
+.env
+.env.local
+.env.production
+.env.development
+.env.backup
+
+# Django Q
+qcluster.log
+
+# =========================================
+# Environment / Dependencies
+# =========================================
+venv/
+env/
+.venv/
+pip-wheel-metadata/
+Pipfile.lock
+poetry.lock
+site/
+
+# =========================================
+# IDEs & Editors
+# =========================================
+.vscode/
+.idea/
+*.iml
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# =========================================
+# OS Files
+# =========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# =========================================
+# Docker
+# =========================================
+*.pid
+*.seed
+docker-compose.override.yml
+tmp/
+*.log
+.dockerignore
+.cache/
+.cache/*
+__pycache__/
+
+# =========================================
+# Build & Coverage
+# =========================================
+build/
+dist/
+*.egg-info/
+*.egg
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+nosetests.xml
+coverage/
+*.cover
+reports/
+junit.xml
+
+# =========================================
+# Frontend (if React/JS exists)
+# =========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.next/
+build/
+dist/
+.env.local
+.env.production
+coverage/
+*.map
+
+# =========================================
+# Others
+# =========================================
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.bak
+*.tmp

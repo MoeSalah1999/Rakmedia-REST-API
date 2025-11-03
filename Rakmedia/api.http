@@ -1,0 +1,74 @@
+GET http://127.0.0.1:8000/employees/ HTTP/1.1
+
+
+###
+
+
+
+GET http://127.0.0.1:8000/employees/5/ HTTP/1.1
+
+
+
+###
+POST http://127.0.0.1:8000/employees/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYwNjEzMDcyLCJpYXQiOjE3NjA2MTI3NzIsImp0aSI6IjM5YzkwZDhiNTgxZTQ3ZTRhNzc3Y2UxOGEwZGJkYjI3IiwidXNlcl9pZCI6IjEifQ.fhiIaJFUuKIo3YxQGnKTxCa2LuJ1eLE1L2IUvQraun8
+
+
+{
+    "employee_code": 130,
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "tesawdtasdf@example.com",
+    "salary": 4500,
+    "company": 1,
+    "department": [1],
+    "position": 12
+}
+
+
+
+
+###
+DELETE http://127.0.0.1:8000/products/2/ HTTP/1.1
+
+
+
+
+
+###
+
+
+#Obtaining access and refresh token request
+POST http://127.0.0.1:8000/api/token/ HTTP/1.1
+Content-Type: application/json
+
+
+{
+    "username": "admin",
+    "password": "Matrix.123"
+}
+
+
+
+###
+
+
+#Refresh Token Request
+POST http://127.0.0.1:8000/api/token/refresh/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYwNTczMzQyLCJpYXQiOjE3NjA1NzMwNDIsImp0aSI6ImFjYmU1YzQ5ZTIyYjQ2MzdhMTFhZmQ4Njc4YjMxMmZhIiwidXNlcl9pZCI6IjEifQ.DQY1iqnWBlnxOtQtpzG6ezBoB0cXc9sn8OEREHWf08Q
+
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MDY1OTQ0MiwiaWF0IjoxNzYwNTczMDQyLCJqdGkiOiI4MTZhNDMxNDZmNTE0M2RiYTRjZWFiNDc5YzA1ZjRiNCIsInVzZXJfaWQiOiIxIn0.vMag74CI4d4aCbC6QfdJIY2S7xmhzcZkWN058zNGj5s"
+}
+
+
+
+###
+
+
+
+GET http://127.0.0.1:8000/user-orders/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU5NzQwNTE0LCJpYXQiOjE3NTk3NDAyMTQsImp0aSI6IjdmNTkzODA4NjVkNzRjODI5NWVhYzYxOWRlNjIwN2JmIiwidXNlcl9pZCI6IjEifQ.wHpmkg2twKf1mx36hVmZOYxqm7JckqpUl1eqO1X3TQc

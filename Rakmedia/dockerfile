@@ -1,0 +1,60 @@
+# ==============================
+# Stage 1: Builder Image
+# ==============================
+FROM python:3.12-slim AS builder
+
+# Prevents .pyc files and enables unbuffered logs
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip and install Python dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy entire project
+COPY . .
+
+# Collect static files (WhiteNoise)
+RUN python manage.py collectstatic --noinput
+
+# ==============================
+# Stage 2: Runtime Image
+# ==============================
+FROM python:3.12-slim
+
+# Create non-root user for better security
+RUN useradd -m appuser
+
+WORKDIR /app
+
+# Copy installed dependencies from builder
+COPY --from=builder /usr/local/lib/python3.12 /usr/local/lib/python3.12
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Copy project files
+COPY . .
+
+# Change ownership to non-root user
+RUN chown -R appuser:appuser /app
+USER appuser
+
+# Set environment variables
+ENV DJANGO_SETTINGS_MODULE=config.settings.prod
+ENV PORT=8000
+
+# Expose the app port
+EXPOSE 8000
+
+# Start Gunicorn WSGI server
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers=3", "--timeout=120"]

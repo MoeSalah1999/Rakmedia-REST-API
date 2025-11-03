@@ -1,0 +1,62 @@
+[
+  {"model": "api.department", "pk": 1, "fields": {"name": "Creative"}},
+  {"model": "api.department", "pk": 2, "fields": {"name": "Tech"}},
+  {"model": "api.department", "pk": 3, "fields": {"name": "Financial"}},
+  {"model": "api.department", "pk": 4, "fields": {"name": "PR"}},
+  {"model": "api.department", "pk": 5, "fields": {"name": "HR"}},
+
+
+
+
+  {"model": "api.employeetype", "pk": 1, "fields": {"name": "Officer"}},
+  {"model": "api.employeetype", "pk": 2, "fields": {"name": "Manager"}},
+  {"model": "api.employeetype", "pk": 3, "fields": {"name": "White Collar"}},
+  {"model": "api.employeetype", "pk": 4, "fields": {"name": "Blue Collar"}},
+
+
+
+
+  {"model": "api.employeerole", "pk": 1, "fields": {"name": "Graphic Designer", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 2, "fields": {"name": "UI/UX", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 3, "fields": {"name": "Backend Dev", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 4, "fields": {"name": "Driver", "employee_type": 4}},
+  {"model": "api.employeerole", "pk": 5, "fields": {"name": "Cleaner", "employee_type": 4}},
+  {"model": "api.employeerole", "pk": 6, "fields": {"name": "Project Manager", "employee_type": 2}},
+  {"model": "api.employeerole", "pk": 7, "fields": {"name": "Finance Manager", "employee_type": 2}},
+  {"model": "api.employeerole", "pk": 8, "fields": {"name": "CMO", "employee_type": 1}},
+  {"model": "api.employeerole", "pk": 9, "fields": {"name": "CTO", "employee_type": 1}},
+  {"model": "api.employeerole", "pk": 10, "fields": {"name": "Photographer", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 11, "fields": {"name": "Videographer", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 12, "fields": {"name": "Montage", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 13, "fields": {"name": "ERP System", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 14, "fields": {"name": "Technician", "employee_type": 4}},
+  {"model": "api.employeerole", "pk": 15, "fields": {"name": "Creative Manager", "employee_type": 2}},
+  {"model": "api.employeerole", "pk": 16, "fields": {"name": "CFO", "employee_type": 1}},
+  {"model": "api.employeerole", "pk": 17, "fields": {"name": "Social Media", "employee_type": 3}},
+  {"model": "api.employeerole", "pk": 18, "fields": {"name": "HR Manager", "employee_type": 2}},
+  {"model": "api.employeerole", "pk": 19, "fields": {"name": "CEO", "employee_type": 1}},
+
+
+
+  {"model": "api.employee", "pk": 1, "fields": {"first_name": "Alice", "last_name": "Smith", "employee_type": 3, "employee_role": 1, "department": [1]}},
+  {"model": "api.employee", "pk": 2, "fields": {"first_name": "Bob", "last_name": "Johnson", "employee_type": 3, "employee_role": 2, "department": [1, 2]}},
+  {"model": "api.employee", "pk": 3, "fields": {"first_name": "Charlie", "last_name": "Brown", "employee_type": 3, "employee_role": 3, "department": [2]}},
+  {"model": "api.employee", "pk": 4, "fields": {"first_name": "Diana", "last_name": "Lee", "employee_type": 4, "employee_role": 4, "department": [4]}},
+  {"model": "api.employee", "pk": 5, "fields": {"first_name": "Ethan", "last_name": "Miller", "employee_type": 4, "employee_role": 5, "department": [5]}},
+  {"model": "api.employee", "pk": 6, "fields": {"first_name": "Fiona", "last_name": "Garcia", "employee_type": 2, "employee_role": 6, "department": [2]}},
+  {"model": "api.employee", "pk": 7, "fields": {"first_name": "George", "last_name": "Martinez", "employee_type": 2, "employee_role": 7, "department": [3]}},
+  {"model": "api.employee", "pk": 8, "fields": {"first_name": "Hannah", "last_name": "Davis", "employee_type": 1, "employee_role": 8, "department": [4]}},
+  {"model": "api.employee", "pk": 9, "fields": {"first_name": "Moe", "last_name": "Salah", "employee_type": 1, "employee_role": 9, "department": [1,2,3,4,5]}},
+  {"model": "api.employee", "pk": 10, "fields": {"first_name": "Jack", "last_name": "Wilson", "employee_type": 3, "employee_role": 10, "department": [1]}},
+  {"model": "api.employee", "pk": 11, "fields": {"first_name": "Karen", "last_name": "Anderson", "employee_type": 3, "employee_role": 11, "department": [1]}},
+  {"model": "api.employee", "pk": 12, "fields": {"first_name": "Leo", "last_name": "Thomas", "employee_type": 3, "employee_role": 12, "department": [1]}},
+  {"model": "api.employee", "pk": 13, "fields": {"first_name": "Mia", "last_name": "Moore", "employee_type": 3, "employee_role": 13, "department": [2]}},
+  {"model": "api.employee", "pk": 14, "fields": {"first_name": "Nathan", "last_name": "Taylor", "employee_type": 4, "employee_role": 14, "department": [2]}},
+  {"model": "api.employee", "pk": 15, "fields": {"first_name": "Olivia", "last_name": "Hernandez", "employee_type": 2, "employee_role": 15, "department": [1]}},
+  {"model": "api.employee", "pk": 16, "fields": {"first_name": "Paul", "last_name": "White", "employee_type": 1, "employee_role": 16, "department": [3]}},
+  {"model": "api.employee", "pk": 17, "fields": {"first_name": "Quincy", "last_name": "Clark", "employee_type": 3, "employee_role": 17, "department": [1, 4]}},
+  {"model": "api.employee", "pk": 18, "fields": {"first_name": "Rachel", "last_name": "Lewis", "employee_type": 3, "employee_role": 3, "department": [2]}},
+  {"model": "api.employee", "pk": 19, "fields": {"first_name": "Sam", "last_name": "Walker", "employee_type": 4, "employee_role": 4, "department": [5]}},
+  {"model": "api.employee", "pk": 20, "fields": {"first_name": "Tina", "last_name": "Young", "employee_type": 2, "employee_role": 18, "department": [5]}},
+  {"model": "api.employee", "pk": 20, "fields": {"first_name": "Rawad", "last_name": "Abdeltiff", "employee_type": 1, "employee_role": 19, "department": [1,2,3,4,5]}}
+]
