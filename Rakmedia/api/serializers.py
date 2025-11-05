@@ -234,6 +234,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
+# Serializer for task files.
 class TaskFileSerializer(serializers.ModelSerializer):
     uploaded_by_name = serializers.SerializerMethodField()
 
