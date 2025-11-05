@@ -75,6 +75,7 @@ class TaskTests(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
+#Tests whether or not file-upload logic is working.
 class FileUploadTests(BaseAPITestCase):
     def test_employee_can_upload_file_to_task(self):
         task = Task.objects.create(title="Upload", description="File", assigned_to=self.employee)
