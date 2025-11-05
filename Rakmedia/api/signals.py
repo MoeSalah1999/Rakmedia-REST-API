@@ -67,6 +67,7 @@ def generate_secure_password(length=12):
 
 
 
+# Automatically creates a new user when an employee is added to the Database.
 @receiver(post_save, sender=Employee)
 def create_user_for_employee(sender, instance, created, **kwargs):
     if created and not instance.user:
