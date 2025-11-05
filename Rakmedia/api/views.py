@@ -51,7 +51,7 @@ class EmployeeListCreateAPIView(generics.ListCreateAPIView):
         filters.SearchFilter,
         filters.OrderingFilter
         ]
-    search_fields = ['first_name', 'last_name', 'email', 'salary']
+    search_fields = ['first_name', 'last_name', 'email', 'salary', 'employee_code']
     ordering_fields = ['employee_code']
     ordering = ['employee_code']
     pagination_class = PageNumberPagination
@@ -178,6 +178,15 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class DepartmentEmployeeListView(generics.ListAPIView):
     serializer_class = EmployeeGetSerializer
     permission_classes = [IsAuthenticated]
+    filterset_class = EmployeeFilter
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    search_fields = ['first_name', 'last_name', 'employee_Code', 'email', 'salary']
+    ordering_fields = ['employee_code']
+    ordering = ['employee_code']
 
     def get_queryset(self):
         user = self.request.user
