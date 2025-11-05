@@ -117,14 +117,13 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+# Returns currently logged in employee's profile.
 @method_decorator(cache_response('employee_profile', timeout=900), name='get')
 class EmployeeProfileAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request):
-        '''
-        Returns currently logged in employee's profile
-        '''
+    
         employee = Employee.objects.filter(user=request.user).select_related('position__job_role', 'position__employee_type').first()
         if not employee:
             return Response({'detail': 'Employee profile is not found.'}, status=404)
