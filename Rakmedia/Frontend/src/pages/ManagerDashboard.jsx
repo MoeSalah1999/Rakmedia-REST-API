@@ -44,6 +44,7 @@ export default function ManagerDashboard() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toasts, setToasts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const addToast = (t) => {
     const id = Math.random().toString(36).slice(2, 9);
@@ -193,7 +194,6 @@ export default function ManagerDashboard() {
     }
   };
 
-  // --- Delete task ---
   const handleDeleteTask = async (taskId, empId) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
     try {
@@ -208,7 +208,6 @@ export default function ManagerDashboard() {
     }
   };
 
-  // --- ✅ Toggle task completion ---
   const handleToggleComplete = async (taskId, empId, currentState) => {
     try {
       const { data: updated } = await axiosClient.patch(`/tasks/${taskId}/`, {
@@ -233,7 +232,16 @@ export default function ManagerDashboard() {
       addToast({ title: "Error", message: "Failed to update task", type: "error" });
     }
   };
-  // --- End completion logic ---
+
+  // --- 🔍 Filter employees based on search ---
+  const filteredEmployees = employees.filter((emp) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      emp.first_name?.toLowerCase().includes(term) ||
+      emp.last_name?.toLowerCase().includes(term) ||
+      emp.employee_code?.toString().toLowerCase().includes(term)
+    );
+  });
 
   if (loading)
     return (
@@ -248,8 +256,21 @@ export default function ManagerDashboard() {
       <Sidebar />
       <main className="flex-1 ml-60 bg-gradient-to-b from-indigo-50 to-white min-h-screen p-10">
         <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">My Employees</h1>
+
+        {/* 🔍 Search Field */}
+        <div className="max-w-md mx-auto mb-10">
+          <input
+            type="text"
+            placeholder="Search employees by name or employee code..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg p-3 shadow-sm focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 outline-none"
+          />
+        </div>
+
+        {/* ✅ FIXED: Use filteredEmployees instead of employees */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {employees.map((emp) => (
+          {filteredEmployees.map((emp) => (
             <motion.div
               key={emp.id}
               initial={{ opacity: 0, y: 10 }}
@@ -475,12 +496,20 @@ export default function ManagerDashboard() {
                       </div>
                     )}
                   </motion.div>
-                )}
+                  )}
               </AnimatePresence>
             </motion.div>
           ))}
         </div>
+
+        {employees.length === 0 && (
+          <div className="text-center text-gray-500 mt-10 text-lg">
+            No employees match your search.
+          </div>
+        )}
       </main>
+
+      {/* Toast container */}
       <Toasts toasts={toasts} />
     </div>
   );
