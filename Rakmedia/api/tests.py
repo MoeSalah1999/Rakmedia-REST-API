@@ -51,6 +51,7 @@ class DepartmentTests(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
+# Tests whether or not managers can create tasks.
 class TaskTests(BaseAPITestCase):
     def test_manager_can_create_task(self):
         self.auth(self.manager_token)
