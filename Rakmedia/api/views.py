@@ -275,15 +275,14 @@ class TaskFileListView(generics.ListAPIView):
     
 
 
+# Deletes a specific task file if the user is authorized.
+# Managers can delete any file related to their own assigned task.
+# Employees can delete only their own uploaded files
 class TaskFileDeleteView(APIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, task_id, file_id):
-        '''
-        Deletes a specific task file if the user is authorized.
-        Managers can delete any file related to their own assigned tasks.
-        Employees can only delete their own uploaded files.
-        '''
+        
         employee = Employee.objects.filter(user=request.user).first()
         task_file = get_object_or_404(TaskFile, pk=file_id, task_id=task_id)
 
