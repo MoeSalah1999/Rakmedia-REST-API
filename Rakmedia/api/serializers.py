@@ -62,6 +62,7 @@ class EmployeePositionSerializer(serializers.ModelSerializer):
 
 
 
+# This is for serializing an employee's full nested data
 class EmployeeDetailSerializer(serializers.ModelSerializer):
     employee_code = serializers.CharField( source='formatted_employee_code', read_only=True )
     job_role = serializers.CharField( source='position.job_role.name', read_only=True )
