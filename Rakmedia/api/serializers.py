@@ -218,7 +218,7 @@ class EmployeePostSerializer(serializers.ModelSerializer):
         return value
     
 
-
+# Serializer for User model aka (Employee Profile)
 class UserSerializer(serializers.ModelSerializer):
     employee_profile = EmployeeGetSerializer(read_only=True)
 
