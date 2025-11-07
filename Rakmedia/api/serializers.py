@@ -171,10 +171,12 @@ class EmployeePostSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # ✅ Restrict M2M query
+        # Restrict M2M query
         self.fields['department'].queryset = Department.objects.only('id', 'name')
 
-        # ✅ Cache position choices for HTML form (only once per request)
+        # Cache position choices for HTML form (only once per request)
+        # This is for the classic N+1 Query optimization issue we faced with the EmployeePosition model,
+        # Specifically the __str__() method that was causing too many Db hits (3x The amount of employees that are in the DB).
         request = self.context.get('request')
         if request and getattr(request.accepted_renderer, 'format', None) == 'html':
             view = self.context.get('view')
@@ -193,7 +195,7 @@ class EmployeePostSerializer(serializers.ModelSerializer):
             )
 
 
-    # --- Validations ---
+    # --- Field Validations ---
     def validate_employee_code(self, value):
         if not isinstance(value, int) or not (1 <= value <= 999):
             raise serializers.ValidationError('Employee code must consist of exactly 3 digits')
