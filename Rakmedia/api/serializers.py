@@ -133,6 +133,9 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
+
+# This is just for fetching (GET) a specific employee.
 class EmployeeGetSerializer(serializers.ModelSerializer):
     employee_code = serializers.CharField(source='formatted_employee_code', read_only=True)
     username = serializers.CharField(source= 'user.username', read_only=True)
