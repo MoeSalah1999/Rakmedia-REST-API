@@ -43,6 +43,7 @@ class JobRoleSerializer(serializers.ModelSerializer):
 
 
 
+# This is for serializing an employee's position ( Employee Type + Employee Role/job_role )
 class EmployeePositionSerializer(serializers.ModelSerializer):
     job_role_name = serializers.CharField(source='job_role.name', read_only=True)
     employee_type_name = serializers.CharField(source='employee_type.name', read_only=True)
