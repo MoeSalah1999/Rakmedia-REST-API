@@ -10,11 +10,11 @@ from django.conf import settings
 
 
 
+# The company model that represents the company as an entity.
+# Each company can have multiple departments, job roles, and employees.
+# Extremely beneficial for large scalable enterprises, or if there are multiple companies in the same code.
 class Company(models.Model):
-    """
-    Represents the company as an entity.
-    Each company can have multiple departments, job roles, and employees.
-    """
+   
     name = models.CharField(max_length=100, unique=True, )
     description = models.TextField(blank=True, null=True)
 
