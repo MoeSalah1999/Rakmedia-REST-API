@@ -49,12 +49,11 @@ class EmployeeType(models.Model):
     
 
 
+# Represents a general job role.
+# Examples: Backend Developer, Photographer, Driver, UI/UX Designer.
+# Each role can belong to multiple departments and is associated with one company.
 class JobRole(models.Model):
-    """
-    Represents a general job role.
-    Examples: Backend Developer, Photographer, Driver, UI/UX Designer.
-    Each role can belong to multiple departments and is associated with one company.
-    """
+    
     name = models.CharField(max_length=30, unique=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='job_roles')
 
