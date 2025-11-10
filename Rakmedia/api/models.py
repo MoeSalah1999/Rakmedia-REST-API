@@ -23,11 +23,11 @@ class Company(models.Model):
         return self.name
 
 
+
+# Represents a department within the company (e.g. Creative, Tech, HR, PR)
+# Each department belongs to one company and can be linked to multiple job roles.
 class Department(models.Model):
-    """
-    Represents a department within the company(e.g., Creative, Tech, HR).
-    Each department belongs to one company and can be linked to multiple job roles.
-    """
+    
     name = models.CharField(max_length=10, unique=True, blank=True, null=True)
     company = models.ForeignKey (Company, on_delete=models.CASCADE, related_name='departments')
 
