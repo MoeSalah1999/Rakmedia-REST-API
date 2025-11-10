@@ -37,12 +37,10 @@ class Department(models.Model):
     
 
 
+# Categorizes employee based on work type:
+# Ex: Officer, Manager, White Collar, Blue Collar.
 class EmployeeType(models.Model):
-    """
-    Categorizes employees based on work type:
-    Examples: Officer, Manager, White Collar, Blue Collar.
-    The name is set as the primary key since it's unique and discriptive.
-    """
+    
     name = models.CharField(max_length=20, unique=True)
 
 
