@@ -63,12 +63,11 @@ class JobRole(models.Model):
     
 
 
+# Connects a job role to an employee type to form a valid position.
+# Ex: ( Backend Developer + White Collar ) or ( Mechanic + Blue Collar )
+# This ensures only logical combinations of roles and employee types exist
 class EmployeePosition(models.Model):
-    """
-    Connects a JobRole to an EmployeeType to form a valid position.
-    Example:(Backend Developer + White Collar) or (Mechanic + Blue Collar).
-    This ensures only logical combinations of roles and employee types exist.
-    """
+    
     job_role = models.ForeignKey(JobRole, on_delete=models.CASCADE, related_name='positions')
     employee_type = models.ForeignKey(EmployeeType, on_delete=models.CASCADE, related_name='positions')
 
