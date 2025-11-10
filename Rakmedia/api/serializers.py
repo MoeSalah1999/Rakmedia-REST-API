@@ -4,6 +4,7 @@ from .models import Company, Department, Employee, EmployeeType, JobRole, Employ
 
 
 
+# Basic Company serializer
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
@@ -13,6 +14,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
 
 
+# Basic Department Serializer
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
@@ -23,6 +25,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 
+# Nested-serializer for Employee Type
 class EmployeeTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeeType
@@ -33,6 +36,7 @@ class EmployeeTypeSerializer(serializers.ModelSerializer):
 
 
 
+# Nested-serializer for job role.
 class JobRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobRole
