@@ -78,6 +78,7 @@ class EmployeePosition(models.Model):
         return f'Position {self.id}'
 
 
+
 # Represents and individual employee.
 # Each employee:
 # - Belongs to a company 
@@ -112,11 +113,12 @@ class Employee(models.Model):
     employee_code = models.PositiveIntegerField(default=999, unique=True)
 
 
+    # This is for displaying the formatted employee code, so we don't have to store a string in the DB.
+    # THe code that is saved in the DB is numerical values (000)
+    # and the formatted employee code is displayed as so: (EMP-000)
     @property
     def formatted_employee_code(self):
-        """
-        Returns a formatted version of the employee code, e.g. EMP-001.
-        """
+        
         if self.employee_code is not None:
             return f'EMP-{self.employee_code:03d}'
         return 'N/A'
@@ -126,10 +128,8 @@ class Employee(models.Model):
         return f'{self.first_name} {self.last_name}'
     
     
+    # Ensure the employee's position type logically matches the job role.
     def clean(self):
-        """
-        Ensure the employee's position type logically matces the job role.
-        """
         if not self.position_id:
             return
         
