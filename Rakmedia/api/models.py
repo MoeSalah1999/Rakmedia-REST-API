@@ -78,17 +78,15 @@ class EmployeePosition(models.Model):
         return f'Position {self.id}'
 
 
-
+# Represents and individual employee.
+# Each employee:
+# - Belongs to a company 
+# - Optionally linked to a department
+# - Holds a position (combination of role and type)
+# - Has a hire date and salary
 class Employee(models.Model):
 
-    """
-    Represents an individual employee.
-    Each employee:
-    - belongs to a company
-    - optionally linked to a department
-    - holds a position (combination of role and type)
-    - has a hire date and salary
-    """
+    # We're using the user model directly as the employee profile.
     user = models.OneToOneField (
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
