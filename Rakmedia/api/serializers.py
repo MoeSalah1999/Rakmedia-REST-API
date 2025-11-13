@@ -128,11 +128,11 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
                 setattr(user, attr, value)
             user.save()
 
-        # ✅ Handle profile_picture update
+        # Handle profile_picture update
         if 'profile_picture' in validated_data:
             instance.profile_picture = validated_data['profile_picture']
 
-        # ✅ Handle other Employee fields
+        # Handle other Employee fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
