@@ -78,10 +78,9 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
 
     def get_role(self, obj):
-        '''
-        Returns a normalized, lowercase role based on the employee_type.
-        Used by the frontend to determine dashboard and access logic
-        '''
+        # Returns a normalized, lowercase role based on the employee_type.
+        # Used by the frontend to determine dashboard and access logic
+        
         try:
             employee_type = obj.position.employee_type.name.lower()
             # Normalize synonyms for consistency
@@ -158,7 +157,7 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
 
 
 
-
+# This is for positng new employee data.
 class EmployeePostSerializer(serializers.ModelSerializer):
     position = serializers.PrimaryKeyRelatedField(
         queryset=EmployeePosition.objects.select_related('job_role', 'employee_type').all()
