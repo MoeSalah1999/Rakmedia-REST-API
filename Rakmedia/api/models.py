@@ -176,6 +176,7 @@ class Employee(models.Model):
     
 
 
+# We're using the user model as an employee-profile object.
 class User (AbstractUser):
     
     is_admin = models.BooleanField(default='False')
