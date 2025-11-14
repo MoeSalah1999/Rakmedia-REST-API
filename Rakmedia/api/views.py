@@ -145,6 +145,7 @@ class EmployeeProfileAPIView(APIView):
 
 
 
+# This is for fetching the Tasks.
 @method_decorator(cache_response('task_list', timeout=900), name='get')
 class TaskListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
