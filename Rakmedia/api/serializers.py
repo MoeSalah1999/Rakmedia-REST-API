@@ -266,6 +266,7 @@ class TaskFileSerializer(serializers.ModelSerializer):
 
 
 
+# Serializer for tasks.
 class TaskSerializer(serializers.ModelSerializer):
     assigned_to_name = serializers.CharField(source='assigned_to.user.username', read_only=True)
     assigned_by_name = serializers.CharField(source='assigned_by.user.username', read_only=True)
