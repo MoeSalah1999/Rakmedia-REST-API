@@ -93,6 +93,7 @@ class EmployeeListCreateAPIView(generics.ListCreateAPIView):
 
 
 
+# This utilizes the EmployeeDetailSerializer.
 @method_decorator(cache_response('employee_details', timeout=900), name='get')
 class EmployeeDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Employee.objects.select_related('user', 'position__job_role', 'position__employee_type').prefetch_related('department')
