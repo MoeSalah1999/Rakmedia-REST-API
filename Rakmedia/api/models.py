@@ -198,6 +198,7 @@ class User (AbstractUser):
 User = get_user_model()
 
 
+# This represents the Tasks that can be assigned by managers.
 class Task(models.Model):
 
     title = models.CharField(max_length=200)
@@ -223,12 +224,9 @@ class Task(models.Model):
         return self.title    
     
 
-
+# This represents a file that is related to a specific task.
+# Files can be uploaded by either the manager or the assigned employee.
 class TaskFile(models.Model):
-    '''
-    Represents a file related to a specific task.
-    Files can be uploaded by either the manager or the assigned employee.
-    '''
     task = models.ForeignKey( 'Task', on_delete=models.CASCADE, related_name='files')
     uploaded_by = models.ForeignKey( 'Employee', on_delete=models.SET_NULL, null=True, blank=True, related_name='uploaded_files')
     file = models.FileField(upload_to='task_files/')
