@@ -86,6 +86,7 @@ class EmployeeListCreateAPIView(generics.ListCreateAPIView):
         #return Employee.objects.only('id', 'employee_code', 'first_name', 'last_name')
             
     
+    # This is for automatically assigning the first Company in the DB when a new employee is added.
     def perform_create(self, serializer):
         default_company = Company.objects.first()
         serializer.save(company=default_company)
