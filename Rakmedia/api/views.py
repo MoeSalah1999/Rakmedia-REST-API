@@ -43,6 +43,8 @@ class EmployeePositionAPIView(generics.ListAPIView):
 
 
 
+# This utilizes the EmployeeGetSerializer and the EmployeePostSerializer 
+# depending on the request type and permissions.
 @method_decorator(cache_response('employee_list', timeout=900), name='get')
 class EmployeeListCreateAPIView(generics.ListCreateAPIView):
     filterset_class = EmployeeFilter
