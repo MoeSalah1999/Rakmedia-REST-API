@@ -219,7 +219,7 @@ class DepartmentEmployeeListView(generics.ListAPIView):
     
 
 
-# Manager's Tasks
+# This is for fetching tasks assigned by managers, and creating them.
 @method_decorator(cache_response('manager_tasks', timeout=900), name='get')
 class ManagerTaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
@@ -238,7 +238,7 @@ class ManagerTaskListCreateView(generics.ListCreateAPIView):
 
 
 
-# Dashboard redirect logic
+# Dashboard redirect logic, This is for switching between ManagerDashboard.jsx and regular Dashboard.jsx
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def my_dashboard_redirect(request):
