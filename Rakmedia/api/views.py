@@ -256,6 +256,7 @@ def my_dashboard_redirect(request):
 
 
 
+# This is for handling upload of task files.
 class TaskFileUploadView(generics.CreateAPIView):
     queryset = TaskFile.objects.all()
     serializer_class = TaskFileSerializer
