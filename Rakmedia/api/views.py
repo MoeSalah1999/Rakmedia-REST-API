@@ -178,7 +178,7 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-# Get employees under manager's authority
+# Get employees under each manager's authority
 @method_decorator(cache_response('department_employees', timeout=900), name='get')
 class DepartmentEmployeeListView(generics.ListAPIView):
     serializer_class = EmployeeGetSerializer
@@ -206,6 +206,7 @@ class DepartmentEmployeeListView(generics.ListAPIView):
             else None
         )
 
+        # Check if the current logged in user is a manager or an officer. Regular employees returns None.
         if employee_type not in ['manager', 'officer']:
             return Employee.objects.none()
         
