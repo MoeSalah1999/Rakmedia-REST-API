@@ -311,3 +311,4 @@ class TaskFileDeleteView(APIView):
         task_file.delete()
         return Response ({'detail': 'File deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
     
+# Note to self: Consider merging all task file operations into one view.
