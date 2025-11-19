@@ -303,6 +303,7 @@ class TaskFileDeleteView(APIView):
             employee.position.employee_type.name.lower() in ['manager', 'officer']
         )
 
+        # Some authentication-based error handling 
         if task_file.uploaded_by != employee and not is_manager:
             return Response({'detail': 'You do not have permission to delete this file.'}, status=status.HTTP_403_FORBIDDEN)
         
