@@ -271,6 +271,7 @@ class TaskFileUploadView(generics.CreateAPIView):
 
 
 
+# This is for fetching files related to each task.
 @method_decorator(cache_response('task_file', timeout=900), name='get')
 class TaskFileListView(generics.ListAPIView):
     serializer_class = TaskFileSerializer
