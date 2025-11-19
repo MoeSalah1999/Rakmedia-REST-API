@@ -169,6 +169,7 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
 
 
 
+# This is for fetching a Task details.
 @method_decorator(cache_response('task_details', timeout=900), name='get')
 class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.select_related('assigned_to', 'assigned_by')
