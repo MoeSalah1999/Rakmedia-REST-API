@@ -26,9 +26,14 @@ urlpatterns = [
 
     # This is for handling task operations by the manager himself.
     path('manager-tasks/', views.ManagerTaskListCreateView.as_view(), name='api_manager_tasks'),
+
     path('tasks/', views.TaskListCreateAPIView.as_view(), name='employee-tasks'),
     path('tasks/<int:pk>/', views.TaskDetailAPIView.as_view(), name='employee-tasks'),
+
+    # This dynamically switches between Dashboard.jsx and ManagerDashboard.jsx
     path('my-dashboard', views.my_dashboard_redirect, name='api_my_dashboard_redirect'),
+
+    # These are for handling file operations.
     path("tasks/<int:task_id>/files/", views.TaskFileListView.as_view(), name="task-files"),
     path("tasks/<int:task_id>/upload-file/", views.TaskFileUploadView.as_view(), name="task-file-upload"),
     path("tasks/<int:task_id>/files/<int:file_id>/", views.TaskFileDeleteView.as_view(), name="task-file-delete"),
