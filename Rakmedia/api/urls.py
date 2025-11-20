@@ -8,9 +8,17 @@ urlpatterns = [
 
     # This is for fetching the details of a specific department using the primary key (department_id).
     path('departments/<int:pk>', views.DepartmentDetailAPIView.as_view()),
+
+    # Fetching or creating employees.
     path('employees/', views.EmployeeListCreateAPIView.as_view()),
+    
+    # Fetching a specific employee data with primary key (employee_id).
     path('employees/<int:pk>', views.EmployeeDetailsAPIView.as_view()),
+
+    # This is for fetching an employee profile instance with all its data.
     path('employees/me/', views.EmployeeProfileAPIView.as_view(), name='employee-profile'),
+
+    # fetching all employee positions there are in the company.
     path('employees/positions/', views.EmployeePositionAPIView.as_view()),
     path('department-employees/', views.DepartmentEmployeeListView.as_view(), name='api_department_employees'),
     path('manager-tasks/', views.ManagerTaskListCreateView.as_view(), name='api_manager_tasks'),
