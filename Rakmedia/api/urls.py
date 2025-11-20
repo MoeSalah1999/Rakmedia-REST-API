@@ -3,7 +3,10 @@ from . import views
 
 
 urlpatterns = [
+    # This is for fetching all company's departments
     path('departments/', views.DepartmentListAPIView.as_view()),
+
+    # This is for fetching the details of a specific department using the primary key (department_id).
     path('departments/<int:pk>', views.DepartmentDetailAPIView.as_view()),
     path('employees/', views.EmployeeListCreateAPIView.as_view()),
     path('employees/<int:pk>', views.EmployeeDetailsAPIView.as_view()),
