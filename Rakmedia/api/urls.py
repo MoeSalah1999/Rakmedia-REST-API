@@ -18,9 +18,13 @@ urlpatterns = [
     # This is for fetching an employee profile instance with all its data.
     path('employees/me/', views.EmployeeProfileAPIView.as_view(), name='employee-profile'),
 
-    # fetching all employee positions there are in the company.
+    # Fetching all employee positions there are in the company.
     path('employees/positions/', views.EmployeePositionAPIView.as_view()),
+
+    # Fetching all employees under specific department, this is for the ManagerDashboard.jsx
     path('department-employees/', views.DepartmentEmployeeListView.as_view(), name='api_department_employees'),
+
+    # This is for handling task operations by the manager himself.
     path('manager-tasks/', views.ManagerTaskListCreateView.as_view(), name='api_manager_tasks'),
     path('tasks/', views.TaskListCreateAPIView.as_view(), name='employee-tasks'),
     path('tasks/<int:pk>/', views.TaskDetailAPIView.as_view(), name='employee-tasks'),
