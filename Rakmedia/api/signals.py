@@ -11,6 +11,9 @@ from .tasks import send_welcome_with_reset_link, send_welcome_email_plain
 
 
 
+# Uncomment this block if you want to automatically create an employee profile when a new employee is added to the database.
+# We're already using a signal that automatically creates a new user when and employee is added to the database,
+# and we're using the user instance as the employee profile object.
 
 #@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 #def create_employee_profile(sender, instance, created, **kwargs):
