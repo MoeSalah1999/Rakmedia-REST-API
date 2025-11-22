@@ -35,13 +35,13 @@ def auto_invalidate_on_save(sender, instance, **kwargs):
         invalidate_cache_by_prefix("TaskFileUpload")
 
 
+# This invalidates cache when a task file is deleted.
 @receiver(post_delete)
 def auto_invalidate_on_delete(sender, instance, **kwargs):
     model_name = sender.__name__
     if model_name in CACHE_MODELS:
         invalidate_cache_by_prefix(model_name)
 
-    # Invalidate cache when a TaskFile is deleted
     if model_name == "TaskFile":
         invalidate_cache_by_prefix("TaskFileDelete")
 
