@@ -50,6 +50,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     ordering = ( 'employee_code', )
     readonly_fields= ( 'formatted_employee_code', )
 
+    # We've optimized queries to minimize database hits, we got the N+1 Query issue earlier because of the output of the EmployeePosition model
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.select_related(
