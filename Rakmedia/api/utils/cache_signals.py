@@ -12,11 +12,10 @@ CACHE_MODELS = [
     'User',
 ]
 
+
 # Helper function
+# Deletes all cache entries that start with the given prefix.
 def invalidate_cache_by_prefix(prefix: str):
-    """
-    Deletes all cache entries that start with the given prefix.
-    """
     # NOTE: Django’s default cache doesn’t support key prefix iteration,
     # so we store keys manually or use Redis with KEYS pattern matching if supported.
     # For now, we clear the entire cache to ensure consistency.
