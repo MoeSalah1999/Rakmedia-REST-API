@@ -8,6 +8,7 @@ from django.contrib.auth.admin import UserAdmin
 
 
 
+# This is for adding new positions to the company
 @admin.register(EmployeePosition)
 class EmployeePositionAdmin(admin.ModelAdmin):
     list_display = ( 'id', 'get_job_role', 'get_employee_type' )
