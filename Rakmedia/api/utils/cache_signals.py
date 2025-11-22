@@ -46,6 +46,7 @@ def auto_invalidate_on_delete(sender, instance, **kwargs):
         invalidate_cache_by_prefix("TaskFileDelete")
 
 
+# Invalidates cache when a many-to-many change is made.
 @receiver(m2m_changed)
 def auto_invalidate_on_m2m_change(sender, instance, **kwargs):
     model_name = instance.__class__.__name__
