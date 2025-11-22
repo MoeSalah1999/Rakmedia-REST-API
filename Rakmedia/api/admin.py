@@ -47,6 +47,8 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_display = ( 'formatted_employee_code', 'first_name', 'last_name', 'position', 'get_departments', 'hire_date', 'salary', 'user' )
     list_select_related = ( 'user','position__job_role', 'position__employee_type', 'company' )
     filter_horizontal = ( 'department', )
+
+    # This is so we can order employees based on their employee code, it also gives a heirarchial concept to the employee code.
     ordering = ( 'employee_code', )
     readonly_fields= ( 'formatted_employee_code', )
 
