@@ -3,15 +3,13 @@ from functools import wraps
 from django.core.cache import cache
 from rest_framework.response import Response
 
-def cache_response(prefix: str, timeout: int = 60):
-    """
-    Decorator to cache DRF responses safely for both class-based and function-based views.
 
-    Works with:
-        @cache_response('key')  -> on a get() method directly
-        OR
-        @method_decorator(cache_response('key'), name='get')
-    """
+# Decorator to cache DRF responses safely for both class-based and function-based views.
+# Works with:
+# @cache_response('key') -> on a get() method directly
+# or
+# @method_decorator(cache_response('key'), name='get')
+def cache_response(prefix: str, timeout: int = 60):
 
     def decorator(view_func):
         @wraps(view_func)
