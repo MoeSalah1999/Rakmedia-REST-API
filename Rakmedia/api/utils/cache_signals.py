@@ -24,13 +24,13 @@ def invalidate_cache_by_prefix(prefix: str):
     print(f"[Cache] Cleared due to change in {prefix}")
 
 
+# This is invalidates cache when a TaskFile is uploaded.
 @receiver(post_save)
 def auto_invalidate_on_save(sender, instance, **kwargs):
     model_name = sender.__name__
     if model_name in CACHE_MODELS:
         invalidate_cache_by_prefix(model_name)
 
-    # Invalidate cache when a TaskFile is uploaded
     if model_name == "TaskFile":
         invalidate_cache_by_prefix("TaskFileUpload")
 
