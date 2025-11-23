@@ -7,6 +7,8 @@ from api.models import Employee  # adjust the app name if different
 
 User = get_user_model()
 
+
+# This modified version writes all user account data to an external file that we can access
 class Command(BaseCommand):
     help = "Create user accounts for employees who don't have one, and save credentials to a CSV file."
 
