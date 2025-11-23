@@ -4,6 +4,7 @@ from api.models import User, Employee, Company
 
 
 
+# This is so we can populate the DB with profiles for existing employees.
 class Command(BaseCommand):
     help = "Automatically create employee profiles for existing Users"
 
