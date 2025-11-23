@@ -29,6 +29,7 @@ class BaseAPITestCase(APITestCase):
         })
         self.manager_token = response.data['access']
 
+        # Returns created user data
         response = self.client.post(reverse('token_obtain_pair'), {
             "username": "employee",
             "password": "pass1234"
@@ -42,6 +43,8 @@ class BaseAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
 
+# Test case to test if managers can create departments with authentication permissions
+# and that regular employees cannot create a department.
 class DepartmentTests(BaseAPITestCase):
     def test_manager_can_create_department(self):
         self.auth(self.manager_token)
