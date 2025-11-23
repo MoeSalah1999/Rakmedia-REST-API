@@ -51,13 +51,14 @@ class DepartmentTests(BaseAPITestCase):
         response = self.client.post(reverse('department-list'), {"name": "Marketing"})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    # Just to be sure.
     def test_employee_cannot_create_department(self):
         self.auth(self.employee_token)
         response = self.client.post(reverse('department-list'), {"name": "Marketing"})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-# Tests whether or not managers can create tasks.
+# Tests whether or not managers can create tasks
 class TaskTests(BaseAPITestCase):
     def test_manager_can_create_task(self):
         self.auth(self.manager_token)
