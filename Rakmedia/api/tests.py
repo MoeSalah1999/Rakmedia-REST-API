@@ -59,6 +59,7 @@ class DepartmentTests(BaseAPITestCase):
 
 
 # Tests whether or not managers can create tasks
+# and employees can view tasks assigned to them, but cannot delete them if they don't have the correct permissions.
 class TaskTests(BaseAPITestCase):
     def test_manager_can_create_task(self):
         self.auth(self.manager_token)
