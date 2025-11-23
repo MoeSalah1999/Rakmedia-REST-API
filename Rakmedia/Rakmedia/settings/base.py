@@ -3,6 +3,10 @@ from datetime import timedelta
 import environ
 import os
 
+
+# This is the base settings file that both dev.py and prod.py pull common settings from
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 env = environ.Env(
