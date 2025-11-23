@@ -8,6 +8,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 User = get_user_model()
 
 
+# This is a basic test case to create employees and create corresponding employee-profiles (user accounts)
+# creates a department that the employees belong to
+# and tests JWT-authentication with login after.
 class BaseAPITestCase(APITestCase):
     def setUp(self):
         # Create users
