@@ -94,6 +94,7 @@ class FileUploadTests(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
+# Independent test case for authentication testing.
 class AuthTests(APITestCase):
     def test_jwt_authentication(self):
         user = User.objects.create_user(username="testuser", password="pass1234")
