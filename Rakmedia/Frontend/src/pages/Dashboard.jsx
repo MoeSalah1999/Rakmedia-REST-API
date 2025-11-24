@@ -113,6 +113,7 @@ export default function Dashboard() {
     fetchAllTasks();
   }, []);
 
+  /* This is for fetching task-related files. */
   const fetchFiles = useCallback(async (taskId) => {
     try {
       const { data } = await axiosClient.get(`tasks/${taskId}/files/`);
