@@ -70,6 +70,7 @@ export default function Dashboard() {
     return f.description || "file";
   };
 
+  /* This is for fetching all tasks assigned to the employee from the database. */
   useEffect(() => {
     const fetchAllTasks = async () => {
       setLoading(true);
