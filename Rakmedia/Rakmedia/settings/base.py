@@ -19,6 +19,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
+# Register your apps here
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     'django_q',
 ]
 
+# Register middleware here
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -89,6 +91,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+# Location for where media files get stored
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -96,8 +100,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# When explicitly creating a user model other than the django default user, you need to tell django which model to use,
+# Otherwise you'll get a conflict of interest error.
 AUTH_USER_MODEL = 'api.User'
 
+# REST framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -107,6 +114,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5,
 }
 
+# Settings for simple JWT authentication
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -118,11 +126,13 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+# Important to include this when linking a frontend UI to your django application
 CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=True)
 CORS_ALLOW_CREDENTIALS = True
 
 INTERNAL_IPS = ['127.0.0.1']
 
+# Cache settings
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -136,6 +146,7 @@ CACHES = {
 
 CACHE_TTL = 60 * 5  # 5 minutes (adjust per view)
 
+# Django Q2 settings for handling background tasks
 Q_CLUSTER = {
     "name": "DjangoQ",
     "workers": 4,
