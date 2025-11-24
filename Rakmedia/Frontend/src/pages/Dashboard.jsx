@@ -70,7 +70,7 @@ export default function Dashboard() {
     return f.description || "file";
   };
 
-  /* This is for fetching all tasks assigned to the employee from the database. */
+  /* This is for fetching all tasks assigned to the employee from the database */
   useEffect(() => {
     const fetchAllTasks = async () => {
       setLoading(true);
@@ -113,7 +113,7 @@ export default function Dashboard() {
     fetchAllTasks();
   }, []);
 
-  /* This is for fetching task-related files. */
+  /* This is for fetching task-related files */
   const fetchFiles = useCallback(async (taskId) => {
     try {
       const { data } = await axiosClient.get(`tasks/${taskId}/files/`);
@@ -130,8 +130,8 @@ export default function Dashboard() {
     }
   }, []);
 
-  
-/* This is handles the upload of task-related files. */
+
+/* This is handles the upload of task-related files */
 const handleFileUpload = async (taskId) => {
   const input = fileInputs[taskId];
   if (!input?.file)
@@ -149,7 +149,7 @@ const handleFileUpload = async (taskId) => {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
-    // ✅ Re-fetch files and update both task.files and filesState
+    // Re-fetch files and update both task.files and filesState
     const { data } = await axiosClient.get(`tasks/${taskId}/files/`);
     const arr = ensureArray(data);
     setFilesState((prev) => ({ ...prev, [taskId]: arr }));
@@ -173,7 +173,7 @@ const handleFileUpload = async (taskId) => {
   }
 };
 
-
+  /* This handles download of task-related files */
   const handleDownload = async (fileUrl, fileName) => {
     if (!fileUrl) {
       addToast({
