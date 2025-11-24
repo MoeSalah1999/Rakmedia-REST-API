@@ -198,7 +198,7 @@ const handleFileUpload = async (taskId) => {
     }
   };
 
-  /* ===== Updated file deletion logic (same as ManagerDashboard) ===== */
+  /* Updated file deletion logic (same as ManagerDashboard) */
 const handleDeleteFile = async (taskId, fileId) => {
   if (!window.confirm("Are you sure you want to delete this file?")) return;
 
