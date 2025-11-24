@@ -260,6 +260,7 @@ const handleDeleteFile = async (taskId, fileId) => {
     );
   }
 
+  /* The tasks cards in the dashboard main page */
   return (
     <div className="flex">
       <Sidebar />
