@@ -130,6 +130,8 @@ export default function Dashboard() {
     }
   }, []);
 
+  
+/* This is handles the upload of task-related files. */
 const handleFileUpload = async (taskId) => {
   const input = fileInputs[taskId];
   if (!input?.file)
