@@ -135,6 +135,7 @@ export default function ManagerDashboard() {
     }
   };
 
+  /* Handles upload of task-related files */
   const handleFileUpload = async (taskId) => {
     const input = fileInputs[taskId];
     if (!input?.file)
@@ -155,6 +156,7 @@ export default function ManagerDashboard() {
     }
   };
 
+  /* Handles download of task-related files */
   const handleDownload = async (fileUrl, fileName) => {
     if (!fileUrl) {
       addToast({
