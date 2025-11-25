@@ -166,6 +166,7 @@ export default function ManagerDashboard() {
       });
       return;
     }
+    /* Some error handling */
     try {
       const response = await axiosClient.get(fileUrl, { responseType: "blob" });
       const blob = new Blob([response.data]);
