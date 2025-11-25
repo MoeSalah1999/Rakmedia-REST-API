@@ -98,6 +98,7 @@ export default function ManagerDashboard() {
       [empId]: { ...p[empId], [e.target.name]: e.target.value },
     }));
 
+  /* Handle tasks assignment */
   const handleAssign = async (empId) => {
     const f = form[empId] || {};
     if (!f.title || !f.due_date)
