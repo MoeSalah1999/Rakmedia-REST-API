@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+
+/* The login page */
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +18,8 @@ export default function Login() {
 
       const storedUser = JSON.parse(localStorage.getItem("USER_DATA"));
       const type = storedUser?.employee_type?.toLowerCase();
-
+      
+      /* Handle redirect logic */
       if (["manager", "officer"].includes(type)) {
         navigate("/manager-dashboard");
       } else {
