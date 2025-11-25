@@ -25,6 +25,8 @@ export default function Login() {
       } else {
         navigate("/dashboard");
       }
+    
+    /* Handle errors gracefully */
     } catch {
       setError("Invalid username or password");
     }
