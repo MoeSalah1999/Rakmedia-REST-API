@@ -241,7 +241,7 @@ export default function ManagerDashboard() {
     }
   };
 
-  // --- 🔍 Filter employees based on search ---
+  // ---  Filter employees based on search ---
   const filteredEmployees = employees.filter((emp) => {
     const term = searchTerm.toLowerCase();
     return (
@@ -265,7 +265,7 @@ export default function ManagerDashboard() {
       <main className="flex-1 ml-60 bg-gradient-to-b from-indigo-50 to-white min-h-screen p-10">
         <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">My Employees</h1>
 
-        {/* 🔍 Search Field */}
+        {/*  Search Field */}
         <div className="max-w-md mx-auto mb-10">
           <input
             type="text"
@@ -276,7 +276,7 @@ export default function ManagerDashboard() {
           />
         </div>
 
-        {/* ✅ FIXED: Use filteredEmployees instead of employees */}
+        {/*  FIXED: Use filteredEmployees instead of employees */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredEmployees.map((emp) => (
             <motion.div
