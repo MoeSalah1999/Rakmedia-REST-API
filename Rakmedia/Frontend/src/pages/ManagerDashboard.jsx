@@ -214,6 +214,7 @@ export default function ManagerDashboard() {
     }
   };
 
+  /** Handles the boolean-value button for completed and uncompleted tasks */
   const handleToggleComplete = async (taskId, empId, currentState) => {
     try {
       const { data: updated } = await axiosClient.patch(`/tasks/${taskId}/`, {
