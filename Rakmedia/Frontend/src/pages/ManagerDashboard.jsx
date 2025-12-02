@@ -199,6 +199,7 @@ export default function ManagerDashboard() {
     }
   };
 
+  /** Handles task deletion */
   const handleDeleteTask = async (taskId, empId) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
     try {
