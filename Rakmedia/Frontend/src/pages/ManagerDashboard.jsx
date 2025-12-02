@@ -182,6 +182,7 @@ export default function ManagerDashboard() {
     }
   };
 
+  /** Handles task-related file deletion */
   const handleDeleteFile = async (taskId, fileId, empId) => {
     if (!window.confirm("Delete this file?")) return;
     try {
