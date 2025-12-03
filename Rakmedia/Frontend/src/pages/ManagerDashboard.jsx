@@ -382,7 +382,7 @@ export default function ManagerDashboard() {
                       </button>
                     </div>
 
-                    {/* Tasks List */}
+                    {/* All Tasks */}
                     {tasks[emp.id]?.length > 0 && (
                       <div className="space-y-3">
                         {tasks[emp.id].map((task) => (
@@ -417,7 +417,7 @@ export default function ManagerDashboard() {
                                   )}
                                 </button>
 
-                                {/* 🗑 Delete button */}
+                                {/*  Delete button */}
                                 <button
                                   onClick={() => handleDeleteTask(task.id, emp.id)}
                                   className="text-red-500 hover:text-red-700"
