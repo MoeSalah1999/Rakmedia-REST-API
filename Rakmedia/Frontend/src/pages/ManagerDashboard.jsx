@@ -321,6 +321,7 @@ export default function ManagerDashboard() {
                         onChange={(e) => handleChange(emp.id, e)}
                         className="border p-2 rounded"
                       />
+                      {/** Task description */}
                       <textarea
                         name="description"
                         placeholder="Task description"
