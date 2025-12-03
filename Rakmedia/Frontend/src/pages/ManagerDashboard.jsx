@@ -338,6 +338,7 @@ export default function ManagerDashboard() {
                         className="border p-2 rounded"
                       />
 
+                      {/** Task-related file-upload field  */}
                       <div className="flex flex-wrap gap-2 items-center">
                         <input
                           type="file"
