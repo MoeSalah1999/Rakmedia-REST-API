@@ -301,7 +301,8 @@ export default function ManagerDashboard() {
                   <ChevronDownIcon className="h-6 w-6 text-indigo-600" />
                 )}
               </div>
-
+              
+              {/** Section for assigning new tasks to employees */}
               <AnimatePresence>
                 {expanded === emp.id && (
                   <motion.div
