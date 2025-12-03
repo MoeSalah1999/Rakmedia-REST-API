@@ -311,7 +311,7 @@ export default function ManagerDashboard() {
                     exit={{ opacity: 0, height: 0 }}
                     className="mt-4 border-t border-gray-200 pt-4 space-y-4"
                   >
-                    {/* Task Form */}
+                    {/* Task title */}
                     <div className="flex flex-col gap-2">
                       <input
                         type="text"
