@@ -329,6 +329,7 @@ export default function ManagerDashboard() {
                         onChange={(e) => handleChange(emp.id, e)}
                         className="border p-2 rounded"
                       />
+                      {/** Task due-date (Deadline) */}
                       <input
                         type="date"
                         name="due_date"
