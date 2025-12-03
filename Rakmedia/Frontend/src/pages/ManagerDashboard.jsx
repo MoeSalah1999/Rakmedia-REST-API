@@ -369,6 +369,7 @@ export default function ManagerDashboard() {
                         />
                       </div>
 
+                      {/** Calls the task-assignment function we created earlier */}
                       <button
                         onClick={() => handleAssign(emp.id)}
                         disabled={saving}
