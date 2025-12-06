@@ -282,6 +282,9 @@ class TaskFileUploadView(generics.CreateAPIView):
 class TaskFileListView(generics.ListAPIView):
     serializer_class = TaskFileSerializer
     permission_classes = [IsAuthenticated]
+
+    # Having a filter for task files isn't quite necessary since we're already displaying each task with its task files in the frontend UI
+    # But it's an accessory that couldn't hurt.
     filterset_class = TaskFileFilter
     filter_backends = [
         DjangoFilterBackend,
