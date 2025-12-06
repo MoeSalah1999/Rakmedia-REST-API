@@ -1,5 +1,5 @@
 import django_filters
-from api.models import Employee
+from api.models import Employee, Task
 
 
 
@@ -14,4 +14,15 @@ class EmployeeFilter(django_filters.FilterSet):
             'email': ['iexact', 'icontains'],
             'salary': ['exact', 'lt', 'gt', 'range'],
             'employee_code': ['exact', 'range'],
+        }
+
+
+class TaskFilter(django_filters.FilterSet):
+    class Meta:
+        model = Task
+
+        fields = {
+            'id': 'iexact',
+            'title': ['iexact', 'icontains'],
+            'description': 'icontains',
         }
