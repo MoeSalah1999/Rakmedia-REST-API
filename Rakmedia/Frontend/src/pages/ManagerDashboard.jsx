@@ -394,7 +394,7 @@ export default function ManagerDashboard() {
                               <div className="font-medium text-sm">{task.title}</div>
 
                               <div className="flex items-center gap-3">
-                                {/* ✅ Completion toggle icon */}
+                                {/* Completion toggle icon */}
                                 <button
                                   onClick={() =>
                                     handleToggleComplete(task.id, emp.id, task.completed)
@@ -514,7 +514,8 @@ export default function ManagerDashboard() {
             </motion.div>
           ))}
         </div>
-
+        
+        {/** Error handling for the search function */}
         {employees.length === 0 && (
           <div className="text-center text-gray-500 mt-10 text-lg">
             No employees match your search.
