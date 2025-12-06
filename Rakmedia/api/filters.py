@@ -2,7 +2,7 @@ import django_filters
 from api.models import Employee, Task
 
 
-
+# filter for employees.
 class EmployeeFilter(django_filters.FilterSet):
     class Meta:
         model = Employee
@@ -17,6 +17,7 @@ class EmployeeFilter(django_filters.FilterSet):
         }
 
 
+# filter for tasks.
 class TaskFilter(django_filters.FilterSet):
     class Meta:
         model = Task
