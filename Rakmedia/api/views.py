@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import generics, filters, permissions, status
-from api.filters import EmployeeFilter
+from api.filters import EmployeeFilter, TaskFilter, TaskFileFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 
@@ -224,6 +224,12 @@ class DepartmentEmployeeListView(generics.ListAPIView):
 class ManagerTaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
+    filterset_class = TaskFilter
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
 
     def get_queryset(self):
         user = self.request.user
@@ -276,6 +282,12 @@ class TaskFileUploadView(generics.CreateAPIView):
 class TaskFileListView(generics.ListAPIView):
     serializer_class = TaskFileSerializer
     permission_classes = [IsAuthenticated]
+    filterset_class = TaskFileFilter
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
 
     def get_queryset(self):
         task_id = self.kwargs.get('task_id')
