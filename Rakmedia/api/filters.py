@@ -1,5 +1,5 @@
 import django_filters
-from api.models import Employee, Task
+from api.models import Employee, Task, TaskFile
 
 
 # filter for employees.
@@ -26,4 +26,19 @@ class TaskFilter(django_filters.FilterSet):
             'id': 'iexact',
             'title': ['iexact', 'icontains'],
             'description': 'icontains',
+            'due_date': 'iexact',
+        }
+
+
+
+# Filter for task files.
+class TaskFileFilter(django_filters.FilterSet):
+    class Meta:
+        model = TaskFile 
+
+        fields = {
+            'id': 'iexact',
+            'task': ['iexact', 'icontains'],
+            'uploaded_by': ['iexact', 'icontains'],
+
         }
