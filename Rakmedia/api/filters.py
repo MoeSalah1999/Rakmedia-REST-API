@@ -17,6 +17,7 @@ class EmployeeFilter(django_filters.FilterSet):
         }
 
 
+
 # filter for tasks.
 class TaskFilter(django_filters.FilterSet):
     class Meta:
