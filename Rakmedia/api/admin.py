@@ -40,10 +40,19 @@ class EmployeeAdminForm(forms.ModelForm):
         return position
     
 
+class TaskInline(admin.TabularInline):
+    model = Task
+    fk_name = 'assigned_to'
+    extra = 0
+    fields = ('title', 'completed', 'assigned_by', 'due_date')
+    readonly_fields = ('title', 'completed', 'assigned_by', 'due_date')
+
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
     form = EmployeeAdminForm
+
+    inlines = [TaskInline]
 
     def get_departments(self, obj):
         return ', '.join([dept.name for dept in obj.department.all()])
