@@ -57,8 +57,15 @@ class EmployeeAdmin(admin.ModelAdmin):
     def get_departments(self, obj):
         return ', '.join([dept.name for dept in obj.department.all()])
     
+    def get_job_role(self, obj):
+        if obj.position and obj.position.job_role:
+            return obj.position.job_role.name
+        return "-"
+    
+    get_job_role.short_description = "Job Role"
+
     get_departments.short_description = 'Department' 
-    list_display = ( 'formatted_employee_code', 'first_name', 'last_name', 'position', 'get_departments', 'hire_date', 'salary', 'user' )
+    list_display = ( 'formatted_employee_code', 'first_name', 'last_name', 'get_job_role', 'get_departments', 'hire_date', 'salary', 'user' )
     list_select_related = ( 'user','position__job_role', 'position__employee_type', 'company' )
     filter_horizontal = ( 'department', )
     list_filter = ('position__employee_type', 'position__job_role', 'department')
