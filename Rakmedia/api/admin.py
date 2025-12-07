@@ -65,7 +65,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
     # This is so we can order employees based on their employee code, it also gives a heirarchial concept to the employee code.
     ordering = ( 'employee_code', )
-    readonly_fields= ( 'formatted_employee_code', )
+    readonly_fields= ( 'formatted_employee_code', 'employee_code')
 
     # We've optimized queries to minimize database hits, we got the N+1 Query issue earlier because of the output of the EmployeePosition model
     def get_queryset(self, request):
