@@ -63,6 +63,9 @@ class EmployeeAdmin(admin.ModelAdmin):
             'user',
         ).prefetch_related('department')
 
+    search_fields = ('first_name', 'last_name', 'employee_code', 'user__username', 'position__job_role__name')
+    
+
     class Media:
         css = {
             'all': ('admin/css/custom_admin.css',)
