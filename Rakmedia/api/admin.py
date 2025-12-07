@@ -15,6 +15,9 @@ class EmployeePositionAdmin(admin.ModelAdmin):
     list_select_related = ( 'job_role', 'employee_type' )
     ordering = ['id',]
 
+    # Search field
+    search_fields = ('job_role__name', 'employee_type__name')
+
     def get_job_role(self, obj):
         return obj.job_role.name
     get_job_role.short_description = 'Job Role'
@@ -63,8 +66,9 @@ class EmployeeAdmin(admin.ModelAdmin):
             'user',
         ).prefetch_related('department')
 
+    # Just makes it easier to search for an employee
     search_fields = ('first_name', 'last_name', 'employee_code', 'user__username', 'position__job_role__name')
-    
+
 
     class Media:
         css = {
