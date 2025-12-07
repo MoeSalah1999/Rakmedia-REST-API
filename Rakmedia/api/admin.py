@@ -14,6 +14,7 @@ class EmployeePositionAdmin(admin.ModelAdmin):
     list_display = ( 'id', 'get_job_role', 'get_employee_type' )
     list_select_related = ( 'job_role', 'employee_type' )
     ordering = ['id',]
+    list_filter = ('employee_type', 'job_role')
 
     # Search field
     search_fields = ('job_role__name', 'employee_type__name')
