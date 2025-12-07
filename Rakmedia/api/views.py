@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import generics, filters, permissions, status
-from api.filters import EmployeeFilter, TaskFilter, TaskFileFilter
+from api.filters import EmployeeFilter #TaskFilter, TaskFileFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 
@@ -224,7 +224,7 @@ class DepartmentEmployeeListView(generics.ListAPIView):
 class ManagerTaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
-    filterset_class = TaskFilter
+    #filterset_class = TaskFilter
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -285,7 +285,7 @@ class TaskFileListView(generics.ListAPIView):
 
     # Having a filter for task files isn't quite necessary since we're already displaying each task with its task files in the frontend UI
     # But it's an accessory that couldn't hurt.
-    filterset_class = TaskFileFilter
+    #filterset_class = TaskFileFilter
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,

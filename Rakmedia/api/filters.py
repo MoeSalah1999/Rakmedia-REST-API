@@ -19,27 +19,25 @@ class EmployeeFilter(django_filters.FilterSet):
 
 
 # filter for tasks.
-class TaskFilter(django_filters.FilterSet):
-    class Meta:
-        model = Task
+#class TaskFilter(django_filters.FilterSet):
+    #class Meta:
+       # model = Task
 
-        fields = {
-            'id': 'iexact',
-            'title': ['iexact', 'icontains'],
-            'description': 'icontains',
-            'due_date': 'iexact',
-        }
+        #fields = {
+        #    'title': ['exact', 'contains'],
+         #   'description': ['contains'],
+         #   'due_date': ['exact'],
+       # }
 
 
 
 # Filter for task files.
-class TaskFileFilter(django_filters.FilterSet):
-    class Meta:
-        model = TaskFile 
+#class TaskFileFilter(django_filters.FilterSet):
+    #class Meta:
+        #model = TaskFile 
 
-        fields = {
-            'id': 'iexact',
-            'task': ['iexact', 'icontains'],
-            'uploaded_by': ['iexact', 'icontains'],
+        #fields = {
+           # 'task': ['exact', 'contains'],
+           # 'uploaded_by': ['exact', 'contains'],
 
-        }
+        #}
