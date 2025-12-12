@@ -58,6 +58,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     def get_departments(self, obj):
         return ', '.join([dept.name for dept in obj.department.all()])
     
+    # tag-styling for the job_role column
     @admin.display(description="Job Role")
     def get_job_role(self,obj):
         if not obj.position or not obj.position.job_role:
