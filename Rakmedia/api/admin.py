@@ -71,6 +71,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     
     get_job_role.short_description = "Job Role"
 
+    # This is just to make the formatted_employee_code column pretty
     @admin.display(description="Employee Code")
     def formatted_employee_code(self,obj):
         return f"EMP-{obj.employee_code:03d}"
