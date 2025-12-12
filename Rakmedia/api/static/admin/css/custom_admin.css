@@ -4,3 +4,10 @@ th.column-employee_code, td.field-employee_code {
     width: 5px !important;
     text-align: center;
 }
+
+/* Make the Job Role column wider */
+th.column-get_job_role,
+td.field-get_job_role {
+    width: 140px !important;      /* Adjust size as needed */
+    min-width: 140px !important;
+}

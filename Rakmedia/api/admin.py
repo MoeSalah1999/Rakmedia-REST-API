@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from .models import Company, Department, EmployeeType, JobRole, EmployeePosition, Employee, User, Task
 from django.contrib.auth.admin import UserAdmin
+from django.utils.html import format_html
 
 
 # Register your models here.
@@ -57,10 +58,16 @@ class EmployeeAdmin(admin.ModelAdmin):
     def get_departments(self, obj):
         return ', '.join([dept.name for dept in obj.department.all()])
     
-    def get_job_role(self, obj):
-        if obj.position and obj.position.job_role:
-            return obj.position.job_role.name
-        return "-"
+    @admin.display(description="Job Role")
+    def get_job_role(self,obj):
+        if not obj.position or not obj.position.job_role:
+            return "-"
+        return format_html(
+            "<span style='padding:4px 8px;border-radius:10px;background:#eef;color:#000;' class='job-role-tag'>"
+            "{}"
+            "</span>",
+            obj.position.job_role.name
+        )
     
     get_job_role.short_description = "Job Role"
 
