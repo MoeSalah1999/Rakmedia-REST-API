@@ -47,6 +47,13 @@ class TaskInline(admin.TabularInline):
     extra = 1 # show one empty row
     fields = ('title', 'completed', 'assigned_by', 'due_date')
 
+    def save_new_instance(self, form, commit=True):
+        obj = super().save_new_instance(form, commit=False)
+        if not obj.assigned_by:
+            obj.assigned_by = self.parent_object.user
+        if commit:
+            obj.save()
+        return obj
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
