@@ -44,9 +44,8 @@ class EmployeeAdminForm(forms.ModelForm):
 class TaskInline(admin.TabularInline):
     model = Task
     fk_name = 'assigned_to'
-    extra = 0
+    extra = 1 # show one empty row
     fields = ('title', 'completed', 'assigned_by', 'due_date')
-    readonly_fields = ('title', 'completed', 'assigned_by', 'due_date')
 
 
 @admin.register(Employee)
