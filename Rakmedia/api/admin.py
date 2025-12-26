@@ -115,6 +115,20 @@ class EmployeeAdmin(admin.ModelAdmin):
         }
     
 
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'assigned_to',
+        'assigned_by',
+        'due_date',
+        'completed',
+    )
+
+    list_filter = ('completed', 'due_date', 'assigned_to')
+    search_fields = ('title', 'assigned_to__first_name', 'assigned_to_last_name')
+    ordering = ('completed', 'due_date')
+
 
 #@admin.register(User)
 #class UserAdmin(admin.ModelAdmin):
@@ -126,4 +140,4 @@ admin.site.register(Company)
 admin.site.register(Department)
 admin.site.register(EmployeeType)
 admin.site.register(JobRole)
-admin.site.register(Task)
+
