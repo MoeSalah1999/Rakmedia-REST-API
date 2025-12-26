@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -13,6 +14,8 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          
           <Route path="/login" element={<Login />} />
 
           <Route
