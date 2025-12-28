@@ -135,7 +135,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         'position__job_role__name'
         )
 
-    
+    list_per_page = 20
 
     class Media:
         css = {
