@@ -84,11 +84,32 @@ class EmployeeAdmin(admin.ModelAdmin):
         return f"EMP-{obj.employee_code:03d}"
 
     get_departments.short_description = 'Department' 
-    list_display = ( 'formatted_employee_code', 'first_name', 'last_name', 'get_job_role', 'get_departments', 'hire_date', 'salary', 'user' )
-    list_select_related = ( 'user','position__job_role', 'position__employee_type', 'company' )
-    filter_horizontal = ( 'department', )
-    list_filter = ('position__employee_type', 'position__job_role', 'department')
 
+    list_display = ( 
+        'formatted_employee_code', 
+        'first_name', 
+        'last_name', 
+        'get_job_role', 
+        'get_departments', 
+        'hire_date', 
+        'salary', 
+        'user' 
+        )
+    
+    list_select_related = ( 
+        'user',
+        'position__job_role', 
+        'position__employee_type', 
+        'company' 
+        )
+    
+    filter_horizontal = ( 'department', )
+    list_filter = (
+        'position__employee_type', 
+        'position__job_role', 
+        'department'
+        )
+    
     # This is so we can order employees based on their employee code, it also gives a heirarchial concept to the employee code.
     ordering = ( 'employee_code', )
 
@@ -106,7 +127,13 @@ class EmployeeAdmin(admin.ModelAdmin):
         ).prefetch_related('department')
 
     # Just makes it easier to search for an employee
-    search_fields = ('first_name', 'last_name', 'employee_code', 'user__username', 'position__job_role__name')
+    search_fields = (
+        'first_name', 
+        'last_name', 
+        'employee_code', 
+        'user__username', 
+        'position__job_role__name'
+        )
 
 
     class Media:
@@ -126,7 +153,11 @@ class TaskAdmin(admin.ModelAdmin):
     )
 
     list_filter = ('completed', 'due_date', 'assigned_to')
-    search_fields = ('title', 'assigned_to__first_name', 'assigned_to_last_name')
+    search_fields = (
+        'title', 
+        'assigned_to__first_name', 
+        'assigned_to__last_name'
+        )
     ordering = ('completed', 'due_date')
 
 
