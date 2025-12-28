@@ -79,7 +79,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     get_job_role.short_description = "Job Role"
 
     # This is just to make the formatted_employee_code column pretty
-    @admin.display(description="Employee Code")
+    @admin.display(description="Employee Code", ordering="employee_code")
     def formatted_employee_code(self,obj):
         return f"EMP-{obj.employee_code:03d}"
 
@@ -135,6 +135,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         'position__job_role__name'
         )
 
+    
 
     class Media:
         css = {
