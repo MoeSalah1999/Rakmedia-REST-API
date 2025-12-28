@@ -85,6 +85,20 @@ class EmployeeAdmin(admin.ModelAdmin):
 
     get_departments.short_description = 'Department' 
 
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return self.readonly_fields + (
+                'user__username',
+                'first_name',
+                'last_name',
+                'email',
+                'company',
+                'department',
+                'position',
+                'salary',
+            )
+        return self.readonly_fields
+
     list_display = ( 
         'formatted_employee_code', 
         'first_name', 
@@ -114,7 +128,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     ordering = ( 'employee_code', )
 
     # Extra security.
-    readonly_fields= ( 'formatted_employee_code', 'employee_code')
+    readonly_fields= ( 'formatted_employee_code', )
 
     # We've optimized queries to minimize database hits, we got the N+1 Query issue earlier because of the output of the EmployeePosition model
     def get_queryset(self, request):
