@@ -3,6 +3,7 @@ from django import forms
 from .models import Company, Department, EmployeeType, JobRole, EmployeePosition, Employee, User, Task
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
+from django.forms import ModelChoiceField
 
 
 # Register your models here.
@@ -29,6 +30,10 @@ class EmployeePositionAdmin(admin.ModelAdmin):
         return obj.employee_type.name
     get_employee_type.short_description = 'Employee Type'
 
+
+class EmployeePositionChoiceField(ModelChoiceField):
+    def label_form_instance(self, obj):
+        return f"{obj.job_role.name} ({obj.employee_type.name})"
 
 
 class EmployeeAdminForm(forms.ModelForm):
@@ -76,6 +81,17 @@ class EmployeeAdmin(admin.ModelAdmin):
             obj.position.job_role.name
         )
     
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'position':
+            qs = EmployeePosition.objects.select_related(
+                'job_role',
+                'employee_type'
+            )
+            kwargs['queryset'] = qs
+            kwargs['form_class'] = EmployeePositionChoiceField
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    
     get_job_role.short_description = "Job Role"
 
     # This is just to make the formatted_employee_code column pretty
@@ -96,6 +112,7 @@ class EmployeeAdmin(admin.ModelAdmin):
                 'department',
                 'position',
                 'salary',
+                'employee_code',
             )
         return self.readonly_fields
 
@@ -127,8 +144,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     # This is so we can order employees based on their employee code, it also gives a heirarchial concept to the employee code.
     ordering = ( 'employee_code', )
 
-    # Extra security.
-    readonly_fields= ( 'formatted_employee_code', )
+    
 
     # We've optimized queries to minimize database hits, we got the N+1 Query issue earlier because of the output of the EmployeePosition model
     def get_queryset(self, request):
