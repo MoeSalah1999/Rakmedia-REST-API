@@ -128,7 +128,8 @@ class EmployeeAdmin(admin.ModelAdmin):
         )
     
     list_display_links = ('formatted_employee_code', 'first_name', 'last_name')
-    
+    date_hierarchy = 'hire_date'
+
     list_select_related = ( 
         'user',
         'position__job_role', 
