@@ -31,6 +31,8 @@ MIDDLEWARE += [
     "silk.middleware.SilkyMiddleware",
 ]
 
+#SILKY_INTERCEPT_FUNC = lambda request: not request.path.startswith("/admin/")
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
