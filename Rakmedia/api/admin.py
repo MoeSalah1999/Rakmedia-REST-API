@@ -49,6 +49,7 @@ class EmployeeAdminForm(forms.ModelForm):
 class TaskInline(admin.TabularInline):
     model = Task
     fk_name = 'assigned_to'
+    select_related = ('assigned_by',)
     extra = 1 # show one empty row
     fields = ('title', 'completed', 'assigned_by', 'due_date')
 
@@ -60,6 +61,7 @@ class TaskInline(admin.TabularInline):
             obj.save()
         return obj
 
+
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
     form = EmployeeAdminForm
@@ -69,6 +71,17 @@ class EmployeeAdmin(admin.ModelAdmin):
     def get_departments(self, obj):
         return ', '.join([dept.name for dept in obj.department.all()])
     
+    def get_object(self, request, object_id, from_field=None):
+        qs = self.get_queryset(request)
+        return qs.select_related(
+            'user',
+            'company',
+            'position__job_role',
+            'position__employee_type',
+        ).prefetch_related(
+            'department'
+        ).filter(pk=object_id).first()
+
     # tag-styling for the job_role column
     @admin.display(description="Job Role")
     def get_job_role(self,obj):
@@ -235,7 +248,14 @@ class DepartmentAdmin(admin.ModelAdmin):
     search_fields = ('id', 'name')
 
 
-
+@admin.register(JobRole)
+class JobRoleAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related(
+            'company'
+        )
+    
 admin.site.register(EmployeeType)
-admin.site.register(JobRole)
+
 
