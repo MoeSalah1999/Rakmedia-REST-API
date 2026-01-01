@@ -194,6 +194,8 @@ class TaskAdmin(admin.ModelAdmin):
         )
     ordering = ('completed', 'due_date')
 
+    list_per_page = 20
+
 
 #@admin.register(User)
 #class UserAdmin(admin.ModelAdmin):
