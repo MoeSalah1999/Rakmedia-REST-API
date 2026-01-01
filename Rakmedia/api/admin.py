@@ -218,9 +218,17 @@ class UserAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    search_fields = ('id', 'name')
 
-admin.site.register(Company)
-admin.site.register(Department)
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    search_fields = ('id', 'name')
+
+
+
 admin.site.register(EmployeeType)
 admin.site.register(JobRole)
 
