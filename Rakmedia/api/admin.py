@@ -161,8 +161,10 @@ class EmployeeAdmin(admin.ModelAdmin):
 
     # Just makes it easier to search for an employee
     search_fields = (
+        'company',
         'first_name', 
-        'last_name', 
+        'last_name',
+        'department', 
         'employee_code', 
         'user__username', 
         'position__job_role__name'
@@ -174,6 +176,13 @@ class EmployeeAdmin(admin.ModelAdmin):
         css = {
             'all': ('admin/css/custom_admin.css',)
         }
+
+    autocomplete_fields = (
+        'user',
+        'company',
+        'department',
+        'position',
+    )
     
 
 @admin.register(Task)
@@ -197,12 +206,19 @@ class TaskAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
-#@admin.register(User)
-#class UserAdmin(admin.ModelAdmin):
-    #list_display = ('username', 'email', 'role', 'is_admin')
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'role', 'is_admin')
+
+    search_fields = (
+        'username',
+        'email',
+        'first_name',
+        'last_name',
+    )
 
 
-#admin.site.register(User, UserAdmin)
+
 admin.site.register(Company)
 admin.site.register(Department)
 admin.site.register(EmployeeType)
