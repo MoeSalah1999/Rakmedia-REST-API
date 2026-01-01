@@ -127,6 +127,8 @@ class EmployeeAdmin(admin.ModelAdmin):
         'user' 
         )
     
+    list_display_links = ('formatted_employee_code', 'first_name', 'last_name')
+    
     list_select_related = ( 
         'user',
         'position__job_role', 
