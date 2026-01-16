@@ -1,6 +1,6 @@
-from django.urls import path 
-from . import views
+from django.urls import path
 
+from . import views
 
 urlpatterns = [
     # This is for fetching all company's departments

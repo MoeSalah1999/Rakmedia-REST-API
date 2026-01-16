@@ -1,20 +1,28 @@
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from .utils.cache_decorator import cache_response
-from api.serializers import CompanySerializer, DepartmentSerializer, EmployeeGetSerializer, EmployeePostSerializer, JobRoleSerializer, EmployeePositionSerializer, EmployeeDetailSerializer, TaskSerializer, TaskFileSerializer
-from api.models import Company, Department, Employee, EmployeePosition, Task, TaskFile
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes, action
-from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework import generics, filters, permissions, status
-from api.filters import EmployeeFilter #TaskFilter, TaskFileFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics, permissions, status
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from api.filters import EmployeeFilter  #TaskFilter, TaskFileFilter
+from api.models import Company, Department, Employee, EmployeePosition, Task, TaskFile
+from api.serializers import (
+    CompanySerializer,
+    DepartmentSerializer,
+    EmployeeDetailSerializer,
+    EmployeeGetSerializer,
+    EmployeePositionSerializer,
+    EmployeePostSerializer,
+    TaskFileSerializer,
+    TaskSerializer,
+)
 
-
+from .utils.cache_decorator import cache_response
 
 # Create your views here.
 

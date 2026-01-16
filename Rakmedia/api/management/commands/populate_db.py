@@ -1,16 +1,17 @@
 
+import random
+
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from faker import Faker
-import random
 
 from api.models import (
     Company,
     Department,
+    Employee,
+    EmployeePosition,
     EmployeeType,
     JobRole,
-    EmployeePosition,
-    Employee
 )
 
 

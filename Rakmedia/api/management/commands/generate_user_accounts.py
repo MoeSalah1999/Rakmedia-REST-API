@@ -1,8 +1,10 @@
 import csv
 import secrets
 import string
-from django.core.management.base import BaseCommand
+
 from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand
+
 from api.models import Employee  # adjust the app name if different
 
 User = get_user_model()

@@ -1,5 +1,7 @@
-from .dev import *
 import os
+
+from .dev import *
+
 env_setting = os.getenv('DJANGO_SETTINGS_MODULE')
 
 if not env_setting:

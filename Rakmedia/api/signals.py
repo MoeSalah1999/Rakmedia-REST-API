@@ -1,15 +1,13 @@
-import secrets, string
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+import secrets
+import string
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-from .models import Employee, Company, Department, EmployeePosition
-from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_q.tasks import async_task
-from .tasks import send_welcome_with_reset_link, send_welcome_email_plain
 
-
+from .models import Employee
 
 # Uncomment this block if you want to automatically create an employee profile when a new employee is added to the database.
 # We're already using a signal that automatically creates a new user when and employee is added to the database,
@@ -106,8 +104,8 @@ def enqueue_welcome_for_user(sender, instance, created, **kwargs):
     # You can use Django's PasswordResetTokenGenerator and build a link to frontend that accepts the token.
     # Example (backend generates token + uid):
     from django.contrib.auth.tokens import default_token_generator
-    from django.utils.http import urlsafe_base64_encode
     from django.utils.encoding import force_bytes
+    from django.utils.http import urlsafe_base64_encode
 
     token = default_token_generator.make_token(instance)
     uid = urlsafe_base64_encode(force_bytes(instance.pk))

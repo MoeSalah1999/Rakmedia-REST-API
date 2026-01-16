@@ -7,5 +7,4 @@ class ApiConfig(AppConfig):
 
     # Include here whatever separate signals file you add to the application and want to utilize.
     def ready(self):
-        import api.signals
-        import api.utils.cache_signals
+        pass

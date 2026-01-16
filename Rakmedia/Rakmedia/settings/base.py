@@ -1,8 +1,8 @@
-from pathlib import Path
-from datetime import timedelta
-import environ
 import os
+from datetime import timedelta
+from pathlib import Path
 
+import environ
 
 # This is the base settings file that both dev.py and prod.py pull common settings from
 

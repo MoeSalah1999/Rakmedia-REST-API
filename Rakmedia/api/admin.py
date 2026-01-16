@@ -1,10 +1,19 @@
-from django.contrib import admin
 from django import forms
-from .models import Company, Department, EmployeeType, JobRole, EmployeePosition, Employee, User, Task
+from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.utils.html import format_html
 from django.forms import ModelChoiceField
+from django.utils.html import format_html
 
+from .models import (
+    Company,
+    Department,
+    Employee,
+    EmployeePosition,
+    EmployeeType,
+    JobRole,
+    Task,
+    User,
+)
 
 # Register your models here.
 

@@ -1,7 +1,16 @@
 from rest_framework import serializers
-from .models import Company, Department, Employee, EmployeeType, JobRole, EmployeePosition, User, Task, TaskFile
 
-
+from .models import (
+    Company,
+    Department,
+    Employee,
+    EmployeePosition,
+    EmployeeType,
+    JobRole,
+    Task,
+    TaskFile,
+    User,
+)
 
 
 # Basic Company serializer

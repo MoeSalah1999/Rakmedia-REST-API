@@ -1,9 +1,10 @@
+from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from django.contrib.auth import get_user_model
+from rest_framework.test import APIClient, APITestCase
+
 from .models import Department, Employee, Task
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 User = get_user_model()
 
@@ -97,7 +98,7 @@ class FileUploadTests(BaseAPITestCase):
 # Independent test case for authentication testing.
 class AuthTests(APITestCase):
     def test_jwt_authentication(self):
-        user = User.objects.create_user(username="testuser", password="pass1234")
+        User.objects.create_user(username="testuser", password="pass1234")
         response = self.client.post(reverse('token_obtain_pair'), {
             "username": "testuser",
             "password": "pass1234"

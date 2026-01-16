@@ -1,5 +1,6 @@
 import django_filters
-from api.models import Employee, Task, TaskFile
+
+from api.models import Employee
 
 
 # filter for employees.

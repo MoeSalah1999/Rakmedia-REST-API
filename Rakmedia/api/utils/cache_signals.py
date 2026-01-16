@@ -1,7 +1,6 @@
-from django.db.models.signals import post_save, post_delete, m2m_changed
-from django.dispatch import receiver
 from django.core.cache import cache
-from django.apps import apps
+from django.db.models.signals import m2m_changed, post_delete, post_save
+from django.dispatch import receiver
 
 # You can list all the model names whose changes should trigger cache invalidation.
 CACHE_MODELS = [
