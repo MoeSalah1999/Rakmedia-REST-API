@@ -1,0 +1,36 @@
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.ruff.isort]
+combine-as-imports = true
+
+
+[tool.isort]
+profile = "black"
+known_django = ["django"]
+known_first_party = ["api", "users", "core"]
+sections = ["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+
+[tool.mypy]
+python_version = "3.11"
+plugins = ["mypy_django_plugin.main"]
+ignore_missing_imports = true
+strict_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+
+[mypy.plugins.django-stubs]
+django_settings_module = "core.settings"
+
+
+[tool.pylint.main]
+disable = [
+  "missing-module-docstring",
+  "missing-class-docstring",
+  "missing-function-docstring",
+]
+max-line-length = 88
