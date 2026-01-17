@@ -5,14 +5,8 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from faker import Faker
 
-from api.models import (
-    Company,
-    Department,
-    Employee,
-    EmployeePosition,
-    EmployeeType,
-    JobRole,
-)
+from api.models import (Company, Department, Employee, EmployeePosition,
+                        EmployeeType, JobRole)
 
 
 class Command(BaseCommand):

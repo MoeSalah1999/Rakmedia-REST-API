@@ -9,18 +9,14 @@ from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.filters import EmployeeFilter  #TaskFilter, TaskFileFilter
-from api.models import Company, Department, Employee, EmployeePosition, Task, TaskFile
-from api.serializers import (
-    CompanySerializer,
-    DepartmentSerializer,
-    EmployeeDetailSerializer,
-    EmployeeGetSerializer,
-    EmployeePositionSerializer,
-    EmployeePostSerializer,
-    TaskFileSerializer,
-    TaskSerializer,
-)
+from api.filters import EmployeeFilter  # TaskFilter, TaskFileFilter
+from api.models import (Company, Department, Employee, EmployeePosition, Task,
+                        TaskFile)
+from api.serializers import (CompanySerializer, DepartmentSerializer,
+                             EmployeeDetailSerializer, EmployeeGetSerializer,
+                             EmployeePositionSerializer,
+                             EmployeePostSerializer, TaskFileSerializer,
+                             TaskSerializer)
 
 from .utils.cache_decorator import cache_response
 

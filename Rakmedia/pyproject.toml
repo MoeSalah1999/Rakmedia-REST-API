@@ -1,18 +1,26 @@
 [tool.ruff]
 line-length = 88
-target-version = "py311"
-lint.select = ["E", "F", "I", "UP", "B"]
-lint.ignore = ["E501"]
+exclude = ["**/migrations/**"]
 
-[tool.ruff.lint.isort]
-combine-as-imports = true
+[tool.ruff.lint]
+select = ["E", "F", "I"]
 
-
-[tool.isort]
-profile = "black"
-known_django = ["django"]
-known_first_party = ["api", "users", "core"]
-sections = ["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+[tool.ruff.lint.per-file-ignores]
+"Rakmedia/settings/*.py" = ["F403", "F405"]
+"api/models.py" = ["E501"]
+"api/serializers.py" = ["E501"]
+"api/views.py" = ["E501"]
+"api/urls.py" = ["E501"]
+"api/signals.py" = ["E501"]
+"api/tasks.py" = ["E501"]
+"api/admin.py" = ["E501"]
+"api/apps.py" = ["E501"]
+"api/management/commands/create_employee_profiles.py" = ["E501"]
+"api/management/commands/generate_user_accounts.py" = ["E501"]
+"api/management/commands/populate_db.py" = ["E501"]
+"api/tests.py" = ["E501"]
+"Rakmedia/settings/base.py" = ["E501"]
+"api/utils/cache_decorator.py" = ["E501"]
 
 
 [tool.mypy]
@@ -22,9 +30,11 @@ ignore_missing_imports = true
 strict_optional = true
 warn_unused_ignores = true
 warn_redundant_casts = true
+disallow_untyped_defs = false
 
-[mypy.plugins.django-stubs]
-django_settings_module = "core.settings"
+
+[tool.django-stubs]
+django_settings_module = "Rakmedia.settings.dev"
 
 
 [tool.pylint.main]

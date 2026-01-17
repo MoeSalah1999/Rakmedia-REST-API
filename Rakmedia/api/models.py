@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -184,16 +183,17 @@ class User (AbstractUser):
         ('manager', 'Manager'),
         ('employee', 'Employee'),
     ]
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='employee')
+    
     #Example Use:
     #   if user.role == 'manager':
     #       show manager dashboard
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='employee')
+    
 
     def __str__(self):
         return self.username
     
 
-User = get_user_model()
 
 
 # This represents the Tasks that can be assigned by managers.

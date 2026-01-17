@@ -3,16 +3,8 @@ from django.contrib import admin
 from django.forms import ModelChoiceField
 from django.utils.html import format_html
 
-from .models import (
-    Company,
-    Department,
-    Employee,
-    EmployeePosition,
-    EmployeeType,
-    JobRole,
-    Task,
-    User,
-)
+from .models import (Company, Department, Employee, EmployeePosition,
+                     EmployeeType, JobRole, Task, User)
 
 # Register your models here.
 
