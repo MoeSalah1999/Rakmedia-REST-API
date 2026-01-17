@@ -1,12 +1,33 @@
 [tool.ruff]
 line-length = 88
-exclude = ["**/migrations/**"]
+target-version = "py311"
+
+# Never lint these
+exclude = [
+    "**/migrations/**",
+    "**/__pycache__/**",
+    ".tox",
+    ".venv",
+]
 
 [tool.ruff.lint]
-select = ["E", "F", "I"]
+# E = pycodestyle errors
+# F = pyflakes (real bugs)
+# I = isort (imports)
+# B = flake8-bugbear (dangerous patterns)
+# UP = pyupgrade (modern Python)
+select = ["E", "F", "I", "B", "UP"]
+
+# Globally acceptable ignores for Django/DRF
+ignore = [
+    "E203",  # whitespace before ':', conflicts with Black
+]
 
 [tool.ruff.lint.per-file-ignores]
-"Rakmedia/settings/*.py" = ["F403", "F405"]
+# Django settings intentionally use star-imports
+"Rakmedia/settings/*.py" = ["F403", "F405", "E501"]
+
+# DRF-heavy files naturally exceed line-length
 "api/models.py" = ["E501"]
 "api/serializers.py" = ["E501"]
 "api/views.py" = ["E501"]
@@ -19,22 +40,45 @@ select = ["E", "F", "I"]
 "api/management/commands/generate_user_accounts.py" = ["E501"]
 "api/management/commands/populate_db.py" = ["E501"]
 "api/tests.py" = ["E501"]
-"Rakmedia/settings/base.py" = ["E501"]
 "api/utils/cache_decorator.py" = ["E501"]
 
 
 [tool.mypy]
-python_version = "3.11"
-plugins = ["mypy_django_plugin.main"]
-ignore_missing_imports = true
-strict_optional = true
+python_version = 3.11
+
+# Strictness (core)
+warn_unused_configs = true
 warn_unused_ignores = true
 warn_redundant_casts = true
+warn_return_any = true
+
+# Django reality settings
+ignore_missing_imports = true
+follow_imports = "silent"
+
+# This is the key to contributor-friendliness
 disallow_untyped_defs = false
+check_untyped_defs = true
+
+# Prevent mypy from exploding on Django internals
+plugins = ["mypy_django_plugin.main"]
+
+# Gradual typing philosophy
+strict_optional = true
+no_implicit_optional = true
+
+# Reduce noise
+show_error_codes = true
+pretty = true
+
 
 
 [tool.django-stubs]
 django_settings_module = "Rakmedia.settings.dev"
+
+# These two keep contributors sane
+strict_settings = false
+strict_model_abstract_attrs = false
 
 
 [tool.pylint.main]
