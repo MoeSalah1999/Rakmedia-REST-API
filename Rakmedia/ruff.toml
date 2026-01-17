@@ -1,0 +1,5 @@
+[lint]
+select = ["E", "F", "I"]
+
+[lint.per-file-ignores]
+"Rakmedia/settings/*.py" = ["F403", "F405"]
