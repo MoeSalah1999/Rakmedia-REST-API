@@ -116,7 +116,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return self.readonly_fields + (
+            return list(self.readonly_fields) + [
                 'user__username',
                 'first_name',
                 'last_name',
@@ -126,7 +126,7 @@ class EmployeeAdmin(admin.ModelAdmin):
                 'position',
                 'salary',
                 'employee_code',
-            )
+            ]
         return self.readonly_fields
 
     list_display = ( 
