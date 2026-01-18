@@ -54,7 +54,7 @@ class TaskInline(admin.TabularInline):
     fields = ('title', 'completed', 'assigned_by', 'due_date')
 
     def save_new_instance(self, form, commit=True):
-        obj = super().save_new_instance(form, commit=False)
+        obj = super().save_new_instance(form, commit=False) # type: ignore[misc]
         if not obj.assigned_by:
             obj.assigned_by = self.parent_object.user
         if commit:
