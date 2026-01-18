@@ -135,6 +135,8 @@ class Employee(models.Model):
         if not position:
             return
         
+        if self.position is None:
+            return ""
     
         role_name = self.position.job_role.name.lower()
         emp_type = self.position.employee_type.name.lower()
