@@ -73,6 +73,7 @@ pretty = true
 
 
 
+
 [tool.django-stubs]
 django_settings_module = "Rakmedia.settings.dev"
 
@@ -81,10 +82,3 @@ strict_settings = false
 strict_model_abstract_attrs = false
 
 
-[tool.pylint.main]
-disable = [
-  "missing-module-docstring",
-  "missing-class-docstring",
-  "missing-function-docstring",
-]
-max-line-length = 88
