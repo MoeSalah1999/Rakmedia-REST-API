@@ -72,7 +72,12 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
     employee_code = serializers.CharField( source='formatted_employee_code', read_only=True )
     job_role = serializers.CharField( source='position.job_role.name', read_only=True )
     employee_type = serializers.CharField( source='position.employee_type.name', read_only=True )
-    department = serializers.SlugRelatedField( many=True, slug_field='name', read_only=True )
+    department: serializers.SlugRelatedField = serializers.SlugRelatedField(
+        many=True,
+        slug_field="name",
+        read_only=True,
+    )
+
     username = serializers.CharField( source='user.username', read_only=True )
     user_email = serializers.EmailField( source='user.email' )
     role = serializers.SerializerMethodField()
@@ -94,6 +99,8 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
 
     def get_profile_picture(self, obj):
         request = self.context.get('request')
+        if request is None:
+            return None
         if obj.profile_picture and hasattr(obj.profile_picture, 'url'):
             return (request.build_absolute_uri(obj.profile_picture.url))
         return None
@@ -188,12 +195,14 @@ class EmployeePostSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if request and getattr(request.accepted_renderer, 'format', None) == 'html':
             view = self.context.get('view')
-            if not hasattr(view, '_position_choices_cache'):
-                view._position_choices_cache = list(
-                    EmployeePosition.objects.select_related('job_role', 'employee_type')
-                )
+            if view is None:
+                return
+            if getattr(view, '_position_choices_cache', None) is None:       
+                view._position_choices_cache = list(  
+                    EmployeePosition.objects.select_related('job_role', 'employee_type')  
+                ) 
 
-            self.fields['position'] = serializers.ChoiceField(
+            self.fields['position'] = serializers.ChoiceField( 
                 choices=[
                     (str(pos.id), f'{pos.job_role.name} ({pos.employee_type.name})')
                     for pos in view._position_choices_cache

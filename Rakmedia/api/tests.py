@@ -19,8 +19,8 @@ class BaseAPITestCase(APITestCase):
         self.employee_user = User.objects.create_user(username="employee", password="pass1234")
 
         # Create employees
-        self.manager = Employee.objects.create(user=self.manager_user, role="Manager")
-        self.employee = Employee.objects.create(user=self.employee_user, role="Employee")
+        self.manager = Employee.objects.create(user=self.manager_user, role="Manager") # type: ignore[misc]
+        self.employee = Employee.objects.create(user=self.employee_user, role="Employee") # type: ignore[misc]
 
         # JWT login to get tokens
         self.client = APIClient()

@@ -74,6 +74,7 @@ disable_error_code = ["attr-defined"]
 
 
 
+
 [tool.django-stubs]
 django_settings_module = "Rakmedia.settings.mypy"
 

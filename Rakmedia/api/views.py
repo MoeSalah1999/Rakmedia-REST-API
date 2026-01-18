@@ -3,6 +3,7 @@ from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import NotAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
@@ -116,11 +117,15 @@ class EmployeeDetailsAPIView(generics.RetrieveUpdateDestroyAPIView):
             
     def get_object(self):
         if self.kwargs.get('pk') == 'me':
+            user = self.request.user
+            if not user.is_authenticated:
+                raise NotAuthenticated()
+            
             return Employee.objects.select_related(
                 'user',
                 'position__job_role',
                 'position__employee_type',
-            ).prefetch_related('department').get(user=self.request.user)
+            ).prefetch_related('department').get(user=user)
         return super().get_object()
 
 
@@ -157,6 +162,8 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated()
         employee = Employee.objects.filter(user=user).first()
 
         if user.is_superuser or user.is_staff:
@@ -168,7 +175,10 @@ class TaskListCreateAPIView(generics.ListCreateAPIView):
         return Task.objects.filter(assigned_to=employee).select_related('assigned_to', 'assigned_by').prefetch_related('files')
 
     def perform_create(self, serializer):
-        employee = Employee.objects.filter(user=self.request.user).first()
+        user = self.request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated()
+        employee = Employee.objects.filter(user=user).first()
         serializer.save(assigned_by=employee)
 
 
@@ -199,6 +209,8 @@ class DepartmentEmployeeListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated()
         employee = Employee.objects.filter(user=user).select_related('company', 'position__employee_type').prefetch_related('department').first()
 
         if not employee:
@@ -237,13 +249,18 @@ class ManagerTaskListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated()
         employee = Employee.objects.filter(user=user).first()
         if not employee:
             return Task.objects.none()
         return Task.objects.filter(assigned_by=employee).select_related('assigned_to', 'assigned_by').prefetch_related('files')
 
     def perform_create(self, serializer):
-        employee = Employee.objects.filter(user=self.request.user).first()
+        user = self.request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated()
+        employee = Employee.objects.filter(user=user).first()
         serializer.save(assigned_by=employee)
 
 
@@ -274,7 +291,10 @@ class TaskFileUploadView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        employee = Employee.objects.filter(user=self.request.user).first()
+        user = self.request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated()
+        employee = Employee.objects.filter(user=user).first()
         task_id = self.kwargs.get('task_id')
         task = get_object_or_404(Task, pk=task_id)
         serializer.save(uploaded_by=employee, task=task)

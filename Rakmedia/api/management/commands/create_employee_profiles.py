@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from api.models import Company, Employee, User
@@ -14,10 +14,8 @@ class Command(BaseCommand):
         skipped_count = 0
 
         default_company = Company.objects.first()
-        if not default_company:
-            self.stdout.write(self.style.ERROR(
-                "!!! No company found, Please create at least one company before running this command."
-            ))
+        if default_company is None:
+            raise CommandError("Company does not exist")
 
         users = User.objects.all()
 
@@ -29,6 +27,7 @@ class Command(BaseCommand):
 
             try:
                 with transaction.atomic():
+                    
                     Employee.objects.create(
                         user=user,
                         first_name=user.first_name or '',
