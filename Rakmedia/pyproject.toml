@@ -75,7 +75,7 @@ pretty = true
 
 
 [tool.django-stubs]
-django_settings_module = "Rakmedia.settings.dev"
+django_settings_module = "Rakmedia.settings.mypy"
 
 # These two keep contributors sane
 strict_settings = false
