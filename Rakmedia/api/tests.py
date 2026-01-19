@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
@@ -17,21 +18,29 @@ class BaseAPITestCase(APITestCase):
         # Create users
         self.manager_user = User.objects.create_user(username="manager", password="pass1234", is_staff=True)
         self.employee_user = User.objects.create_user(username="employee", password="pass1234")
+        self.company = Company.objects.create(name="Test Co")
+        dept = Department.objects.create(name="test dept")
 
         # Create employees
         self.manager = Employee.objects.create(
             user=self.manager_user,
             first_name="Manager",
             last_name="User",
-            company=Company.objects.create(name="Test Co"),
+            company=self.company,
+            employee_code=f"EMP-{uuid.uuid4().hex[:8]}",
         )
+
+        self.manager.department.set([dept])
 
         self.employee = Employee.objects.create(
             user=self.employee_user,
             first_name="Employee",
             last_name="User",
-            company=self.manager.company,
+            company=self.company,
+            employee_code=f"EMP-{uuid.uuid4().hex[:8]}",
         )
+
+        self.employee.department.set([dept])
 
         # JWT login to get tokens
         self.client = APIClient()
