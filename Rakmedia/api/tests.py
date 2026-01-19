@@ -4,7 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from .models import Department, Employee, Task
+from .models import Department, Employee, Task, Company
 
 User = get_user_model()
 
@@ -19,8 +19,19 @@ class BaseAPITestCase(APITestCase):
         self.employee_user = User.objects.create_user(username="employee", password="pass1234")
 
         # Create employees
-        self.manager = Employee.objects.create(user=self.manager_user, role="Manager") # type: ignore[misc]
-        self.employee = Employee.objects.create(user=self.employee_user, role="Employee") # type: ignore[misc]
+        self.manager = Employee.objects.create(
+            user=self.manager_user,
+            first_name="Manager",
+            last_name="User",
+            company=Company.objects.create(name="Test Co"),
+        )
+
+        self.employee = Employee.objects.create(
+            user=self.employee_user,
+            first_name="Employee",
+            last_name="User",
+            company=self.manager.company,
+        )
 
         # JWT login to get tokens
         self.client = APIClient()
