@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
@@ -36,7 +37,12 @@ class DepartmentListAPIView(generics.ListCreateAPIView):
     serializer_class = DepartmentSerializer
 
     def perform_create(self, serializer):
-        employee = self.request.user.employee_profile
+        user = self.request.user
+
+        if isinstance(user, AnonymousUser):
+            raise NotAuthenticated
+        
+        employee = user.employee_profile
         serializer.save(company=employee.company)
 
 
