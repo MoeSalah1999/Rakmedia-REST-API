@@ -98,7 +98,14 @@ class TaskTests(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_employee_cannot_delete_other_tasks(self):
-        other_employee = Employee.objects.create(user=User.objects.create_user("other", "other@x.com", "1234"))
+        other_user = User.objects.create_user('other', 'other@x.com', '1234')
+        other_employee = Employee.objects.create(
+            user=other_user,
+            first_name='Other',
+            last_name='User',
+            company=self.company,
+            employee_code=f"{random.randint(0, 999):03}",
+        )
         task = Task.objects.create(title="Another", description="Task", assigned_to=other_employee)
         self.auth(self.employee_token)
         response = self.client.delete(reverse('task-detail', args=[task.id]))

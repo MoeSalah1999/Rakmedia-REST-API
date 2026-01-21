@@ -43,8 +43,14 @@ class TestFunctionalAPI:
             company=self.company,
             employee_code=f"{random.randint(0, 999):03}",
         )
-
-        self.department = Department.objects.create(name="Engineering")
+        dept = Department.objects.create(
+            name='test dept',
+            company=self.company,
+        )
+        self.department = Department.objects.create(
+            name="Engineering",
+            company=self.company
+        )
 
     def authenticate(self, username, password):
         response = self.client.post(
