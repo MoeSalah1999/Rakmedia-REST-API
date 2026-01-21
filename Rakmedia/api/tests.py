@@ -1,4 +1,4 @@
-import uuid
+import random
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
@@ -19,7 +19,7 @@ class BaseAPITestCase(APITestCase):
         self.manager_user = User.objects.create_user(username="manager", password="pass1234", is_staff=True)
         self.employee_user = User.objects.create_user(username="employee", password="pass1234")
         self.company = Company.objects.create(name="Test Co")
-        dept = Department.objects.create(name="test dept")
+        dept = Department.objects.create(name="test dept", company=self.company,)
 
         # Create employees
         self.manager = Employee.objects.create(
@@ -27,7 +27,7 @@ class BaseAPITestCase(APITestCase):
             first_name="Manager",
             last_name="User",
             company=self.company,
-            employee_code=f"EMP-{uuid.uuid4().hex[:8]}",
+            employee_code=f"{random.randint(0, 999):03}",
         )
 
         self.manager.department.set([dept])
@@ -37,7 +37,7 @@ class BaseAPITestCase(APITestCase):
             first_name="Employee",
             last_name="User",
             company=self.company,
-            employee_code=f"EMP-{uuid.uuid4().hex[:8]}",
+            employee_code=f"{random.randint(0, 999):03}",
         )
 
         self.employee.department.set([dept])

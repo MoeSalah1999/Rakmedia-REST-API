@@ -1,4 +1,5 @@
 import pytest
+import random
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
@@ -31,6 +32,8 @@ class TestFunctionalAPI:
             first_name="Manager",
             last_name="User",
             company=self.company,
+            employee_code=f"{random.randint(0, 999):03}",
+
         )
 
         self.employee = Employee.objects.create(
@@ -38,6 +41,7 @@ class TestFunctionalAPI:
             first_name="Employee",
             last_name="User",
             company=self.company,
+            employee_code=f"{random.randint(0, 999):03}",
         )
 
         self.department = Department.objects.create(name="Engineering")
@@ -91,6 +95,7 @@ class TestFunctionalAPI:
             first_name="Other",
             last_name="User",
             company=self.company,
+            employee_code=f"{random.randint(0, 999):03}",
         )
 
         task = Task.objects.create(
