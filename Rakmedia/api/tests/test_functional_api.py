@@ -43,7 +43,7 @@ class TestFunctionalAPI:
             company=self.company,
             employee_code=f"{random.randint(0, 999):03}",
         )
-        
+
         self.department = Department.objects.create(
             name="Engineering",
             company=self.company
@@ -63,13 +63,13 @@ class TestFunctionalAPI:
         )
 
     def test_department_list_requires_auth(self):
-        response = self.client.get(reverse("departments-list"))
+        response = self.client.get(reverse("department-list"))
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_manager_can_create_department(self):
         self.authenticate("manager", "pass1234")
         response = self.client.post(
-            reverse("departments-list"),
+            reverse("department-list"),
             {"name": "HR"},
         )
         assert response.status_code == status.HTTP_201_CREATED
@@ -77,7 +77,7 @@ class TestFunctionalAPI:
     def test_employee_cannot_create_department(self):
         self.authenticate("employee", "pass1234")
         response = self.client.post(
-            reverse("departments-list"),
+            reverse("department-list"),
             {"name": "HR"},
         )
         assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -91,7 +91,7 @@ class TestFunctionalAPI:
 
         self.authenticate("employee", "pass1234")
         response = self.client.get(
-            reverse("tasks-detail", args=[task.id])
+            reverse("employee-task-detail", args=[task.id])
         )
         assert response.status_code == status.HTTP_200_OK
 

@@ -4,10 +4,18 @@ from . import views
 
 urlpatterns = [
     # This is for fetching all company's departments
-    path('departments/', views.DepartmentListAPIView.as_view()),
+    path(
+        'departments/', 
+        views.DepartmentListAPIView.as_view(),
+        name='department-list',
+    ),
 
     # This is for fetching the details of a specific department using the primary key (department_id).
-    path('departments/<int:pk>', views.DepartmentDetailAPIView.as_view()),
+    path(
+        'departments/<int:pk>', 
+        views.DepartmentDetailAPIView.as_view(),
+        name='department-detail',
+    ),
 
     # Fetching or creating employees.
     path('employees/', views.EmployeeListCreateAPIView.as_view()),
@@ -27,8 +35,12 @@ urlpatterns = [
     # This is for handling task operations by the manager himself.
     path('manager-tasks/', views.ManagerTaskListCreateView.as_view(), name='api_manager_tasks'),
 
-    path('tasks/', views.TaskListCreateAPIView.as_view(), name='employee-tasks'),
-    path('tasks/<int:pk>/', views.TaskDetailAPIView.as_view(), name='employee-tasks'),
+    path(
+        'tasks/', 
+        views.TaskListCreateAPIView.as_view(), 
+        name='employee-tasks',
+    ),
+    path('tasks/<int:pk>/', views.TaskDetailAPIView.as_view(), name='employee-task-detail'),
 
     # This dynamically switches between Dashboard.jsx and ManagerDashboard.jsx
     path('my-dashboard', views.my_dashboard_redirect, name='api_my_dashboard_redirect'),

@@ -92,7 +92,7 @@ class TaskTests(BaseAPITestCase):
     def test_employee_can_view_own_tasks(self):
         task = Task.objects.create(title="Do something", description="desc", assigned_to=self.employee)
         self.auth(self.employee_token)
-        response = self.client.get(reverse('task-detail', args=[task.id]))
+        response = self.client.get(reverse('employee-task-detail', args=[task.id]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_employee_cannot_delete_other_tasks(self):
@@ -106,7 +106,7 @@ class TaskTests(BaseAPITestCase):
         )
         task = Task.objects.create(title="Another", description="Task", assigned_to=other_employee)
         self.auth(self.employee_token)
-        response = self.client.delete(reverse('task-detail', args=[task.id]))
+        response = self.client.delete(reverse('employee-task-detail', args=[task.id]))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
@@ -116,7 +116,7 @@ class FileUploadTests(BaseAPITestCase):
         task = Task.objects.create(title="Upload", description="File", assigned_to=self.employee)
         file = SimpleUploadedFile("test.txt", b"dummy content")
         self.auth(self.employee_token)
-        response = self.client.post(reverse('taskfile-upload', args=[task.id]), {'file': file})
+        response = self.client.post(reverse('task-file-upload', args=[task.id]), {'file': file})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
