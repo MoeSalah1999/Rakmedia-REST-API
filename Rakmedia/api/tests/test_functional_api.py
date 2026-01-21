@@ -43,14 +43,15 @@ class TestFunctionalAPI:
             company=self.company,
             employee_code=f"{random.randint(0, 999):03}",
         )
-        dept = Department.objects.create(
-            name='test dept',
-            company=self.company,
-        )
+        
         self.department = Department.objects.create(
             name="Engineering",
             company=self.company
         )
+
+        self.manager.department.set([self.department])
+        self.employee.department.set([self.department])
+        
 
     def authenticate(self, username, password):
         response = self.client.post(
@@ -62,13 +63,13 @@ class TestFunctionalAPI:
         )
 
     def test_department_list_requires_auth(self):
-        response = self.client.get(reverse("department-list"))
+        response = self.client.get(reverse("departments-list"))
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_manager_can_create_department(self):
         self.authenticate("manager", "pass1234")
         response = self.client.post(
-            reverse("department-list"),
+            reverse("departments-list"),
             {"name": "HR"},
         )
         assert response.status_code == status.HTTP_201_CREATED
@@ -76,7 +77,7 @@ class TestFunctionalAPI:
     def test_employee_cannot_create_department(self):
         self.authenticate("employee", "pass1234")
         response = self.client.post(
-            reverse("department-list"),
+            reverse("departments-list"),
             {"name": "HR"},
         )
         assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -90,7 +91,7 @@ class TestFunctionalAPI:
 
         self.authenticate("employee", "pass1234")
         response = self.client.get(
-            reverse("task-detail", args=[task.id])
+            reverse("tasks-detail", args=[task.id])
         )
         assert response.status_code == status.HTTP_200_OK
 
@@ -112,6 +113,6 @@ class TestFunctionalAPI:
 
         self.authenticate("employee", "pass1234")
         response = self.client.delete(
-            reverse("task-detail", args=[task.id])
+            reverse("tasks-detail", args=[task.id])
         )
         assert response.status_code == status.HTTP_403_FORBIDDEN

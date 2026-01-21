@@ -57,8 +57,6 @@ class BaseAPITestCase(APITestCase):
         })
         self.employee_token = response.data['access']
 
-        # Department
-        self.department = Department.objects.create(name="Sales")
 
     def auth(self, token):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
