@@ -31,12 +31,16 @@ class CompanyAPIView(generics.RetrieveAPIView):
     serializer_class = CompanySerializer
 
 
-class DepartmentListAPIView(generics.ListAPIView):
+class DepartmentListAPIView(generics.ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
 
+    def perform_create(self, serializer):
+        employee = self.request.user.employee_profile
+        serializer.save(company=employee.company)
 
-class DepartmentDetailAPIView(generics.RetrieveAPIView):
+
+class DepartmentDetailAPIView(generics.ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
 

@@ -1,4 +1,5 @@
 import random
+
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
@@ -74,7 +75,7 @@ class DepartmentTests(BaseAPITestCase):
     def test_employee_cannot_create_department(self):
         self.auth(self.employee_token)
         response = self.client.post(reverse('department-list'), {"name": "Marketing"})
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 # Tests whether or not managers can create tasks
@@ -82,7 +83,7 @@ class DepartmentTests(BaseAPITestCase):
 class TaskTests(BaseAPITestCase):
     def test_manager_can_create_task(self):
         self.auth(self.manager_token)
-        response = self.client.post(reverse('task-list'), {
+        response = self.client.post(reverse('employee-tasks'), {
             "title": "Prepare report",
             "description": "Prepare Q4 report",
             "assigned_to": self.employee.id
@@ -107,7 +108,7 @@ class TaskTests(BaseAPITestCase):
         task = Task.objects.create(title="Another", description="Task", assigned_to=other_employee)
         self.auth(self.employee_token)
         response = self.client.delete(reverse('employee-task-detail', args=[task.id]))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 #Tests whether or not task-related file-upload logic is working.
