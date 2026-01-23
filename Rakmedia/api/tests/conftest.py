@@ -26,10 +26,10 @@ def manager_employee(company, department):
         is_staff=True,
     )
 
-    emp_type = EmployeeType.objects.create(name='manager')
-    job_role = JobRole.objects.create(name='designer', company=company)
+    emp_type, _ = EmployeeType.objects.get_or_create(name='Manager')
+    job_role, _ = JobRole.objects.get_or_create(name='designer', company=company)
 
-    position = EmployeePosition.objects.create(
+    position, _ = EmployeePosition.objects.get_or_create(
         job_role=job_role,
         employee_type=emp_type,
     )
@@ -55,10 +55,15 @@ def employee(company, department):
         role='employee',
     )
 
-    emp_type = EmployeeType.objects.create(name='employee')
-    job_role = JobRole.objects.create(name='Developer', company=company)
+    emp_type, _ = EmployeeType.objects.get_or_create(name='employee')
+    job_role, _ = JobRole.objects.get_or_create(name='Developer', company=company)
 
-    position = EmployeePosition.objects.create(
+    position, _ = EmployeePosition.objects.get_or_create(
+        job_role=job_role,
+        employee_type=emp_type
+    )
+
+    employee = Employee.objects.create(
         user=user,
         first_name='Employee',
         last_name='User',
@@ -66,7 +71,64 @@ def employee(company, department):
         employee_code=random.randint(100, 900),
         position=position,
     )
-
     employee.department.set([department])
     return employee
 
+@pytest.fixture
+def other_employee(company, department):
+    user = User.objects.create_user(
+        username="other",
+        password="pass1234",
+        role="employee",
+    )
+
+    emp_type, _ = EmployeeType.objects.get_or_create(name="employee")
+    job_role, _ = JobRole.objects.get_or_create(name="QA", company=company)
+
+    position, _ = EmployeePosition.objects.get_or_create(
+        job_role=job_role,
+        employee_type=emp_type,
+    )
+
+    other_employee = Employee.objects.create(
+        user=user,
+        first_name="Other",
+        last_name="User",
+        company=company,
+        employee_code=random.randint(100, 999),
+        position=position,
+    )
+    other_employee.department.set([department])
+    return other_employee
+
+
+@pytest.fixture
+def authenticated_manager_client(manager_employee):
+    client = APIClient()
+    response = client.post(
+        reverse("token_obtain_pair"),
+        {
+            "username": manager_employee.user.username,
+            "password": "pass1234",
+        },
+    )
+    client.credentials(
+        HTTP_AUTHORIZATION=f"Bearer {response.data['access']}"
+    )
+    return client
+
+
+@pytest.fixture
+def authenticated_employee_client(employee):
+    client = APIClient()
+    response = client.post(
+        reverse("token_obtain_pair"),
+        {
+            "username": employee.user.username,
+            "password": "pass1234",
+        },
+    )
+    client.credentials(
+        HTTP_AUTHORIZATION=f"Bearer {response.data['access']}"
+    )
+    return client
