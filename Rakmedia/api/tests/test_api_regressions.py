@@ -194,3 +194,24 @@ class TestTaskFileSecurity:
         )
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
+
+
+
+@pytest.mark.django_db
+class TestDashboardRedirect:
+
+    def test_manager_redirects_to_manager_dashboard(
+        self, authenticated_manager_client
+    ):
+        response = authenticated_manager_client.get(
+            reverse("my-dashboard-redirect")
+        )
+        assert response.data["redirect_to"] == "/manager-dashboard/"
+
+    def test_employee_redirects_to_regular_dashboard(
+        self, authenticated_employee_client
+    ):
+        response = authenticated_employee_client.get(
+            reverse("my-dashboard-redirect")
+        )
+        assert response.data["redirect_to"] == "/dashboard/"
