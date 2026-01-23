@@ -1,12 +1,11 @@
 import random
-
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from .models import Company, Department, Employee, Task
+from .models import Company, Department, Employee, Task, EmployeeType, EmployeePosition, JobRole
 
 User = get_user_model()
 
@@ -21,6 +20,15 @@ class BaseAPITestCase(APITestCase):
         self.employee_user = User.objects.create_user(username="employee", password="pass1234")
         self.company = Company.objects.create(name="Test Co")
         dept = Department.objects.create(name="test dept", company=self.company,)
+        self.manager_type = EmployeeType.objects.create(name='manager')
+        self.manager_job_role = JobRole.objects.create(
+            name='HR Manager',
+            company = self.company
+        )
+        self.manager_position = EmployeePosition.objects.create(
+            job_role=self.manager_job_role,
+            employee_type=self.manager_type,
+        )
 
         # Create employees
         self.manager = Employee.objects.create(
@@ -30,7 +38,8 @@ class BaseAPITestCase(APITestCase):
             company=self.company,
             employee_code=f"{random.randint(0, 999):03}",
         )
-
+        self.manager.position = self.manager_position
+        self.manager.save()
         self.manager.department.set([dept])
 
         self.employee = Employee.objects.create(
@@ -47,7 +56,7 @@ class BaseAPITestCase(APITestCase):
         self.client = APIClient()
         response = self.client.post(reverse('token_obtain_pair'), {
             "username": "manager",
-            "password": "pass1234"
+            "password": "pass1234",
         })
         self.manager_token = response.data['access']
 
@@ -75,7 +84,7 @@ class DepartmentTests(BaseAPITestCase):
     def test_employee_cannot_create_department(self):
         self.auth(self.employee_token)
         response = self.client.post(reverse('department-list'), {"name": "Marketing"})
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 # Tests whether or not managers can create tasks
@@ -108,7 +117,7 @@ class TaskTests(BaseAPITestCase):
         task = Task.objects.create(title="Another", description="Task", assigned_to=other_employee)
         self.auth(self.employee_token)
         response = self.client.delete(reverse('employee-task-detail', args=[task.id]))
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 #Tests whether or not task-related file-upload logic is working.

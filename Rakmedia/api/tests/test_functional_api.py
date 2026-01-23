@@ -6,7 +6,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.models import Company, Department, Employee, Task
+from api.models import Company, Department, Employee, Task, EmployeeType, EmployeePosition, JobRole
 
 User = get_user_model()
 
@@ -50,7 +50,18 @@ class TestFunctionalAPI:
             company=self.company
         )
 
+        self.manager_type = EmployeeType.objects.create(name='manager')
+        self.manager_job_role = JobRole.objects.create(
+            name="HR Manager",
+            company=self.company,
+        )
+        self.manager_position = EmployeePosition.objects.create(
+            job_role=self.manager_job_role,
+            employee_type=self.manager_type,
+        )
         self.manager.department.set([self.department])
+        self.manager.position = self.manager_position
+        self.manager.save()
         self.employee.department.set([self.department])
         
 
@@ -65,7 +76,7 @@ class TestFunctionalAPI:
 
     def test_department_list_requires_auth(self):
         response = self.client.get(reverse("department-list"))
-        assert response.status_code == status.HTTP_200_OK
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_manager_can_create_department(self):
         self.authenticate("manager", "pass1234")
@@ -81,7 +92,7 @@ class TestFunctionalAPI:
             reverse("department-list"),
             {"name": "HR"},
         )
-        assert response.status_code == status.HTTP_201_CREATED
+        assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_employee_can_view_assigned_task(self):
         task = Task.objects.create(
@@ -116,4 +127,4 @@ class TestFunctionalAPI:
         response = self.client.delete(
             reverse("employee-task-detail", args=[task.id])
         )
-        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert response.status_code == status.HTTP_403_FORBIDDEN

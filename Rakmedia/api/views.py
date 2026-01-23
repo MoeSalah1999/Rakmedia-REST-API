@@ -4,10 +4,10 @@ from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.exceptions import NotAuthenticated
+from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -32,9 +32,28 @@ class CompanyAPIView(generics.RetrieveAPIView):
     serializer_class = CompanySerializer
 
 
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+        
+        employee = getattr(request.user, "employee_profile", None)
+        if not employee or not employee.position or not employee.position.employee_type:
+            return False
+        
+        return employee.position.employee_type.name.lower() in ["manager", "officer"]
+    
+
 class DepartmentListAPIView(generics.ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return [IsManager()]
+        return [IsAuthenticated()]
+            
 
     def perform_create(self, serializer):
         user = self.request.user
@@ -200,6 +219,11 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
 
+    def perform_destroy(self, instance):
+        employee = self.request.user.employee_profile
+        if instance.assigned_to != employee:
+            raise PermissionDenied("You cannot delete this task")
+        instance.delete()
 
 
 # Get employees under each manager's authority
