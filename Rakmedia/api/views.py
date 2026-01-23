@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, BasePermission
+from rest_framework.permissions import (AllowAny, BasePermission, IsAdminUser,
+                                        IsAuthenticated)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 

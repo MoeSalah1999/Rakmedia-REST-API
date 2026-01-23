@@ -6,7 +6,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.models import Company, Department, Employee, Task, EmployeeType, EmployeePosition, JobRole
+from api.models import (Company, Department, Employee, EmployeePosition,
+                        EmployeeType, JobRole, Task)
 
 User = get_user_model()
 
