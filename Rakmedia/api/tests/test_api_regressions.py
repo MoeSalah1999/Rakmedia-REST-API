@@ -104,3 +104,41 @@ class TestTaskListVisibility:
 
         assert response.status_code == status.HTTP_201_CREATED
         assert response.data["assigned_by"] == manager_employee.id
+
+
+@pytest.mark.django_db
+class TestTaskDeletionRules:
+
+    def test_employee_can_delete_own_task(
+        self, authenticated_employee_client, employee
+    ):
+        from api.models import Task
+
+        task = Task.objects.create(
+            title="Self",
+            description="x",
+            assigned_to=employee,
+        )
+
+        response = authenticated_employee_client.delete(
+            reverse("employee-task-detail", args=[task.id])
+        )
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    def test_employee_cannot_delete_others_task(
+        self, authenticated_employee_client, employee, other_employee
+    ):
+        from api.models import Task
+
+        task = Task.objects.create(
+            title="Private",
+            description="x",
+            assigned_to=other_employee,
+        )
+
+        response = authenticated_employee_client.delete(
+            reverse("employee-task-detail", args=[task.id])
+        )
+
+        assert response.status_code == status.HTTP_403_FORBIDDEN
