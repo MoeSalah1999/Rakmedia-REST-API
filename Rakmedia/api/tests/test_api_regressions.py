@@ -142,3 +142,55 @@ class TestTaskDeletionRules:
         )
 
         assert response.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.django_db
+class TestDepartmentEmployeeAccess:
+
+    def test_employee_cannot_access_department_employees(
+        self, authenticated_employee_client
+    ):
+        response = authenticated_employee_client.get(
+            reverse("api_department_employees")
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data == []
+
+    def test_manager_sees_department_employees(
+        self, authenticated_manager_client, employee
+    ):
+        response = authenticated_manager_client.get(
+            reverse("api_department_employees")
+        )
+        assert response.status_code == status.HTTP_200_OK
+        ids = [emp["id"] for emp in response.data]
+        assert employee.id in ids
+
+
+@pytest.mark.django_db
+class TestTaskFileSecurity:
+
+    def test_employee_cannot_delete_others_file(
+        self, authenticated_employee_client, task_file_uploaded_by_other
+    ):
+        response = authenticated_employee_client.delete(
+            reverse(
+                "task-file-delete",
+                args=[task_file_uploaded_by_other.task.id,
+                      task_file_uploaded_by_other.id],
+            )
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_manager_can_delete_any_task_file(
+        self, authenticated_manager_client, task_file_uploaded_by_other
+    ):
+        response = authenticated_manager_client.delete(
+            reverse(
+                "task-file-delete",
+                args=[task_file_uploaded_by_other.task.id,
+                      task_file_uploaded_by_other.id],
+            )
+        )
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+

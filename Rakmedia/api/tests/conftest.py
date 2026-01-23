@@ -34,7 +34,7 @@ def manager_employee(company, department):
         employee_type=emp_type,
     )
 
-    employee = Employee.objects.create(
+    manager = Employee.objects.create(
         user=user,
         first_name='Manager',
         last_name='User',
@@ -43,8 +43,8 @@ def manager_employee(company, department):
         position=position,
     )
 
-    employee.department.set([department])
-    return employee
+    manager.department.set([department])
+    return manager
 
 
 @pytest.fixture
