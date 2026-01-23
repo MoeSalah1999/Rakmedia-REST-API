@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.models import Department, Company
+from api.models import Department
 
 
 @pytest.mark.django_db
@@ -193,8 +193,6 @@ class TestTaskFileSecurity:
             )
         )
         assert response.status_code == status.HTTP_204_NO_CONTENT
-
-
 
 
 @pytest.mark.django_db

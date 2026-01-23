@@ -1,10 +1,12 @@
 import random
+
 import pytest
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APIClient
-from django.contrib.auth import get_user_model
 
-from api.models import Company, Department, Employee, EmployeeType, JobRole, EmployeePosition
+from api.models import (Company, Department, Employee, EmployeePosition,
+                        EmployeeType, JobRole)
 
 User = get_user_model()
 
