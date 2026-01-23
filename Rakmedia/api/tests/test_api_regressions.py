@@ -32,3 +32,31 @@ class TestDepartmentEdgeCases:
             reverse('department-list')
         )
         assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+class TestEmployeeProfileAPI:
+
+    def test_profile_requires_auth(self):
+        client = APIClient()
+        response = client.get(reverse("employee-profile"))
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_employee_gets_own_profile(
+        self, authenticated_employee_client, employee
+    ):
+        response = authenticated_employee_client.get(
+            reverse("employee-profile")
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["id"] == employee.id
+
+    def test_employee_can_patch_own_profile(
+        self, authenticated_employee_client
+    ):
+        response = authenticated_employee_client.patch(
+            reverse("employee-profile"),
+            {"first_name": "Updated"},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["first_name"] == "Updated"
