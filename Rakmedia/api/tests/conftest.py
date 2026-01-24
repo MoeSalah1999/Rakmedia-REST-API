@@ -1,12 +1,13 @@
 import random
-
+import tempfile
 import pytest
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APIClient
 
 from api.models import (Company, Department, Employee, EmployeePosition,
-                        EmployeeType, JobRole)
+                        EmployeeType, JobRole, Task, TaskFile)
 
 User = get_user_model()
 
@@ -134,3 +135,27 @@ def authenticated_employee_client(employee):
         HTTP_AUTHORIZATION=f"Bearer {response.data['access']}"
     )
     return client
+
+
+@pytest.fixture
+def task_file_uploaded_by_other(other_employee):
+    task = Task.objects.create(
+        title="File task",
+        description="x",
+        assigned_to=other_employee,
+        assigned_by=other_employee,
+    )
+
+    uploaded_file = SimpleUploadedFile(
+        "test.txt",
+        b"test content",
+        content_type="text/plain",
+    )
+
+    task_file = TaskFile.objects.create(
+        task=task,
+        uploaded_by=other_employee,
+        file=uploaded_file,
+    )
+
+    return task_file
