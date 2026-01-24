@@ -82,3 +82,11 @@ django_settings_module = "Rakmedia.settings.mypy"
 strict_settings = false
 strict_model_abstract_attrs = false
 
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-xdist",
+    "pytest-sugar",
+    "pytest-cov",
+]

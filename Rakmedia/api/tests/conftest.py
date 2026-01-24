@@ -2,6 +2,7 @@ import random
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -12,6 +13,10 @@ from api.models import (Company, Department, Employee, EmployeePosition,
 User = get_user_model()
 
 
+@pytest.fixture(autouse=True)
+def clear_cache():
+    cache.clear()
+    
 @pytest.fixture
 def company(db):
     return Company.objects.create(name='Test Company')
