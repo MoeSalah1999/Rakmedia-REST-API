@@ -1,4 +1,6 @@
-from django.contrib.auth.models import AnonymousUser
+from typing import cast
+
+from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
@@ -221,7 +223,8 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
-        employee = self.request.user.employee_profile
+        user = cast(AbstractUser, self.request.user)
+        employee = user.employee_profile
         if instance.assigned_to != employee:
             raise PermissionDenied("You cannot delete this task")
         instance.delete()
