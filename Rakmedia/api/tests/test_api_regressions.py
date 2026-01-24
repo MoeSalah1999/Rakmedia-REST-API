@@ -202,7 +202,7 @@ class TestDashboardRedirect:
         self, authenticated_manager_client
     ):
         response = authenticated_manager_client.get(
-            reverse("my-dashboard-redirect")
+            reverse("api_my_dashboard_redirect")
         )
         assert response.data["redirect_to"] == "/manager-dashboard/"
 
@@ -210,6 +210,6 @@ class TestDashboardRedirect:
         self, authenticated_employee_client
     ):
         response = authenticated_employee_client.get(
-            reverse("my-dashboard-redirect")
+            reverse("api_my_dashboard_redirect")
         )
         assert response.data["redirect_to"] == "/dashboard/"
