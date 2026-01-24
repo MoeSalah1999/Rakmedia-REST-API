@@ -1,4 +1,5 @@
 import pytest
+from django.core.cache import cache
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -157,8 +158,12 @@ class TestDepartmentEmployeeAccess:
         assert response.data == []
 
     def test_manager_sees_department_employees(
-        self, authenticated_manager_client, employee
+        self, authenticated_manager_client, employee, manager_employee
     ):
+        # Ensure shared department
+        cache.clear()
+        employee.department.set(manager_employee.department.all())
+
         response = authenticated_manager_client.get(
             reverse("api_department_employees")
         )
